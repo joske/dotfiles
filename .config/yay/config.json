@@ -1,7 +1,7 @@
 {
   "aururl": "https://aur.archlinux.org",
   "aurrpcurl": "https://aur.archlinux.org/rpc?",
-  "buildDir": "/home/eiger/.cache/yay",
+  "buildDir": "/home/jos/.cache/yay",
   "editor": "",
   "editorflags": "",
   "makepkgbin": "makepkg",

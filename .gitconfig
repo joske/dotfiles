@@ -1,0 +1,9 @@
+[user]
+	name = Jos Dehaes
+	email = jos.dehaes@gmail.com
+[init]
+	defaultBranch = master
+[core]
+	excludesfile = /home/jos/.gitignore
+[pull]
+	rebase = true
