@@ -32,8 +32,18 @@ for i = 1, 8 do
 	})
 end
 
+local hostname = wezterm.hostname()
+
+local font_size
+if hostname == "yoga" then
+	-- Use a bigger font on the smaller screen of my PixelBook Go
+	font_size = 16.0
+else
+	font_size = 11.0
+end
+
 config.font = wezterm.font("Ubuntu Mono Nerd Font Mono")
-config.font_size = 11.0
+config.font_size = font_size
 config.initial_rows = 60
 config.initial_cols = 140
 
