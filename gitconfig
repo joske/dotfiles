@@ -7,3 +7,5 @@
 	excludesfile = /home/jos/.gitignore
 [pull]
 	rebase = true
+[diff]
+    external = difft
