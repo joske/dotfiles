@@ -9,3 +9,5 @@
 	rebase = true
 [diff]
     external = difft
+[pager]
+    difftool = true
