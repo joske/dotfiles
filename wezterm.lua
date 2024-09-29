@@ -35,14 +35,17 @@ end
 local hostname = wezterm.hostname()
 
 local font_size
-if hostname == "yoga" then
-	-- Use a bigger font on the smaller screen of my PixelBook Go
+if hostname == "yoga" or hostname == "air.local" then
 	font_size = 16.0
 else
-	font_size = 11.0
+	font_size = 12.0
 end
 
-config.font = wezterm.font("Ubuntu Mono Nerd Font Mono")
+if hostname == "air.local" then
+	config.font = wezterm.font("UbuntuMono Nerd Font Mono")
+else
+	config.font = wezterm.font("Ubuntu Mono Nerd Font Mono")
+end
 config.font_size = font_size
 config.initial_rows = 60
 config.initial_cols = 140
@@ -50,18 +53,18 @@ config.initial_cols = 140
 config.warn_about_missing_glyphs = false
 
 -- use the below for wayland
-config.integrated_title_button_alignment = "Left"
-config.integrated_title_button_style = "Gnome"
-config.integrated_title_buttons = { "Close", "Hide", "Maximize" }
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-config.window_frame = {
-	border_left_width = "0.25cell",
-	border_right_width = "0.25cell",
-	border_bottom_height = "0.25cell",
-	border_top_height = "0.25cell",
-	border_left_color = "gray",
-	border_right_color = "gray",
-	border_bottom_color = "gray",
-	border_top_color = "gray",
-}
+-- config.integrated_title_button_alignment = "Left"
+-- config.integrated_title_button_style = "Gnome"
+-- config.integrated_title_buttons = { "Close", "Hide", "Maximize" }
+-- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+-- config.window_frame = {
+-- 	border_left_width = "0.25cell",
+-- 	border_right_width = "0.25cell",
+-- 	border_bottom_height = "0.25cell",
+-- 	border_top_height = "0.25cell",
+-- 	border_left_color = "gray",
+-- 	border_right_color = "gray",
+-- 	border_bottom_color = "gray",
+-- 	border_top_color = "gray",
+-- }
 return config
