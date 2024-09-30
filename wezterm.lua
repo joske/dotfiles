@@ -35,13 +35,13 @@ end
 local hostname = wezterm.hostname()
 
 local font_size
-if hostname == "yoga" or hostname == "air.local" then
+if hostname == "yoga" or hostname == "air.local" or hostname == "air" then
 	font_size = 16.0
 else
 	font_size = 12.0
 end
 
-if hostname == "air.local" then
+if hostname == "air.local" or hostname == "air" then
 	config.font = wezterm.font("UbuntuMono Nerd Font Mono")
 else
 	config.font = wezterm.font("Ubuntu Mono Nerd Font Mono")
