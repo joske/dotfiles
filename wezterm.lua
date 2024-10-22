@@ -32,16 +32,18 @@ for i = 1, 8 do
 	})
 end
 
-local hostname = wezterm.hostname()
+local is_darwin = function()
+	return wezterm.target_triple:find("darwin") ~= nil
+end
 
 local font_size
-if hostname == "air.local" or hostname == "air" or hostname == "eiger" or hostname == "eiger.local" then
-	font_size = 16.0
+if is_darwin() then
+	font_size = 14.0
 else
 	font_size = 12.0
 end
 
-if hostname == "air.local" or hostname == "air" or hostname == "eiger" or hostname == "eiger.local" then
+if is_darwin() then
 	config.font = wezterm.font("UbuntuMono Nerd Font Mono")
 else
 	config.font = wezterm.font("Ubuntu Mono Nerd Font Mono")
