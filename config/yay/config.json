@@ -39,7 +39,7 @@
   "editmenu": false,
   "combinedupgrade": true,
   "useask": false,
-  "batchinstall": true,
+  "batchinstall": false,
   "singlelineresults": false,
   "separatesources": true,
   "debug": false,
