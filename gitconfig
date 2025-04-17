@@ -11,3 +11,10 @@
     external = difft
 [pager]
     difftool = true
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = jos.dehaes@gmail.com
+	smtpServerPort = 587
+[credential]
+	helper = store
