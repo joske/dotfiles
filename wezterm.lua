@@ -54,19 +54,23 @@ config.initial_cols = 140
 
 config.warn_about_missing_glyphs = false
 
+local is_wayland = os.getenv("WAYLAND_DISPLAY") ~= nil
 -- use the below for wayland
--- config.integrated_title_button_alignment = "Left"
--- config.integrated_title_button_style = "Gnome"
--- config.integrated_title_buttons = { "Close", "Hide", "Maximize" }
--- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
--- config.window_frame = {
--- 	border_left_width = "0.25cell",
--- 	border_right_width = "0.25cell",
--- 	border_bottom_height = "0.25cell",
--- 	border_top_height = "0.25cell",
--- 	border_left_color = "gray",
--- 	border_right_color = "gray",
--- 	border_bottom_color = "gray",
--- 	border_top_color = "gray",
--- }
-return config
+if is_wayland then
+	config.enable_wayland = true
+	config.integrated_title_button_alignment = "Left"
+	config.integrated_title_button_style = "Gnome"
+	config.integrated_title_buttons = { "Close", "Hide", "Maximize" }
+	config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+	config.window_frame = {
+		border_left_width = "0.25cell",
+		border_right_width = "0.25cell",
+		border_bottom_height = "0.25cell",
+		border_top_height = "0.25cell",
+		border_left_color = "gray",
+		border_right_color = "gray",
+		border_bottom_color = "gray",
+		border_top_color = "gray",
+	}
+	return config
+end
