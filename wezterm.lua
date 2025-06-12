@@ -48,7 +48,7 @@ config.font_size = font_size
 config.initial_rows = 60
 config.initial_cols = 140
 config.warn_about_missing_glyphs = false
-config.scrollback_lines = 10000
+config.scrollback_lines = 100000
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
 
