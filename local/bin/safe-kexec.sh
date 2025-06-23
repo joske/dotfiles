@@ -50,4 +50,5 @@ kexec -l "$KERNEL_IMG" --initrd="$INITRD_IMG" --command-line="$CMDLINE" 2>&1 | t
 echo "Kernel loaded. Executing kexec now." | tee -a "$LOGFILE"
 sleep 2
 
-kexec -e 2>&1 | tee -a "$LOGFILE"
+# no point in piping output to the log file, kexec will boot the new kernel, and this script will not continue
+kexec -e
