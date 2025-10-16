@@ -17,6 +17,7 @@ config.keys = {
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.ActivateTabRelative(-1),
 	},
+	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
 	{
 		key = "RightArrow",
 		mods = "CTRL|SHIFT",
