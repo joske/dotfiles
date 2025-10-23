@@ -1,10 +1,11 @@
 [user]
 	name = Jos Dehaes
 	email = jos.dehaes@gmail.com
+	signingkey = ~/.ssh/id_rsa.pub
 [init]
 	defaultBranch = master
 [core]
-	excludesfile = /home/jos/.gitignore
+	excludesfile = ~/.gitignore
 [pull]
 	rebase = true
 [diff]
@@ -18,3 +19,9 @@
 	smtpServerPort = 587
 [credential]
 	helper = store
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
