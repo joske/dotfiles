@@ -54,14 +54,14 @@ config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
 
 local is_wayland = os.getenv("WAYLAND_DISPLAY") ~= nil
-local is_gnome = (os.getenv("XDG_CURRENT_DESKTOP") or ""):find("GNOME") ~= nil
 if is_wayland then
 	config.enable_wayland = true
+	local is_gnome = (os.getenv("XDG_CURRENT_DESKTOP") or ""):find("GNOME") ~= nil
 	if is_gnome then
 		-- If we are running under GNOME, we need to set the window decorations ourselves
 		config.integrated_title_button_alignment = "Left"
 		config.integrated_title_button_style = "Gnome"
-		config.integrated_title_buttons = { "Close", "Hide", "Maximize" }
+		config.integrated_title_buttons = { "Close", "Maximize", "Hide" }
 		config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 		config.window_frame = {
 			border_left_width = "0.25cell",
