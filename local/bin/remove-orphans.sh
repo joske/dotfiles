@@ -1,1 +1,1 @@
-pacman -Qdtq | sudo xargs -r pacman -Rns
+pacman -Qdtq | sudo pacman -Rns -
