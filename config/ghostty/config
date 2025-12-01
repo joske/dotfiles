@@ -10,3 +10,5 @@ keybind = ctrl+shift+left=previous_tab
 keybind = ctrl+shift+right=next_tab
 keybind = ctrl+shift+t=new_tab
 
+# Slowdown mouse scrolling
+mouse-scroll-multiplier = 0.95
