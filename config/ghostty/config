@@ -1,4 +1,5 @@
 theme = Wez
+command = fish
 font-family = Ubuntu Mono Nerd Font
 copy-on-select = clipboard
 cursor-style = block
