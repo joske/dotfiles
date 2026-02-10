@@ -25,3 +25,5 @@
 	gpgsign = true
 [gpg "ssh"]
 	allowedSignersFile = ~/.config/git/allowed_signers
+[color]
+	ui = auto
