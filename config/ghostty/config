@@ -1,18 +1,31 @@
 theme = Wez
 command = fish
+term = xterm-256color
 font-family = Ubuntu Mono Nerd Font
 copy-on-select = clipboard
 cursor-style = block
-shell-integration-features = no-cursor
+shell-integration-features = cursor,sudo,title,no-cursor
 gtk-wide-tabs = false
+
+# Scrollback
+scrollback-limit = 3023
 
 # disable ligatures
 font-feature = -calt, -liga, -dlig
+
+mouse-hide-while-typing = true
+
+# Disable annoying copied to clipboard
+app-notifications = no-clipboard-copy,no-config-reload
 
 # Navigate between tabs - works OOB on linux but not macOS
 keybind = ctrl+shift+left=previous_tab
 keybind = ctrl+shift+right=next_tab
 keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+n=new_window
+keybind = ctrl+shift+plus=increase_font_size:1
+keybind = ctrl+shift+minus=decrease_font_size:1
+keybind = ctrl+shift+zero=reset_font_size
 
 # Slowdown mouse scrolling
 mouse-scroll-multiplier = 0.95
