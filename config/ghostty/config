@@ -1,5 +1,4 @@
 theme = Wez
-command = fish
 term = xterm-256color
 font-family = Ubuntu Mono Nerd Font
 copy-on-select = clipboard
