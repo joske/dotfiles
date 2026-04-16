@@ -1,0 +1,30 @@
+binds {
+    Ctrl+Alt+Delete hotkey-overlay-title="Task Manager" { spawn "dms" "ipc" "call" "processlist" "toggle"; }
+    Ctrl+Print repeat=false hotkey-overlay-title="Screenshot: Full Screen" { spawn "dms" "ipc" "call" "niri" "screenshotScreen"; }
+    F10 hotkey-overlay-title="Media: Previous Track" repeat=false { spawn "dms" "ipc" "call" "mpris" "previous"; }
+    F12 repeat=false hotkey-overlay-title="Media: Next Track" { spawn "dms" "ipc" "call" "mpris" "next"; }
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+    Mod+Comma hotkey-overlay-title="Settings" { spawn "dms" "ipc" "call" "settings" "toggle"; }
+    Mod+M hotkey-overlay-title="Task Manager" { spawn "dms" "ipc" "call" "processlist" "toggle"; }
+    Mod+N hotkey-overlay-title="Notification Center" { spawn "dms" "ipc" "call" "notifications" "toggle"; }
+    Mod+Shift+N hotkey-overlay-title="Notepad" { spawn "dms" "ipc" "call" "notepad" "toggle"; }
+    Mod+Space hotkey-overlay-title="Application Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+V hotkey-overlay-title="Clipboard Manager" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Mod+Y hotkey-overlay-title="Browse Wallpapers" { spawn "dms" "ipc" "call" "dankdash" "wallpaper"; }
+    Pause repeat=false hotkey-overlay-title="Media: Play/Pause" { spawn "dms" "ipc" "call" "mpris" "playPause"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "3"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
+    XF86AudioMute allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "3"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
+    Alt+Ctrl+Down repeat=false hotkey-overlay-title="Focus Workspace Down" { focus-workspace-down; }
+    Alt+Ctrl+Shift+Down repeat=false hotkey-overlay-title="Move to Workspace Down" { move-column-to-workspace-down; }
+    Alt+Ctrl+Shift+Up repeat=false hotkey-overlay-title="Move to Workspace Up" { move-column-to-workspace-up; }
+    Alt+Ctrl+Up repeat=false hotkey-overlay-title="Focus Workspace Up" { focus-workspace-up; }
+    Alt+F4 repeat=false hotkey-overlay-title="Close Window" { close-window; }
+    Alt+Print hotkey-overlay-title="Screenshot Window" { screenshot-window; }
+    Super+Up repeat=false hotkey-overlay-title="Fullscreen" { fullscreen-window; }
+    Print hotkey-overlay-title="Screenshot (Interactive)" { screenshot show-pointer=false; }
+    Alt+Ctrl+S repeat=false hotkey-overlay-title="Suspend" { suspend; }
+}
