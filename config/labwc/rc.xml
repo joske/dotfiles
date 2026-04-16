@@ -1,0 +1,61 @@
+<labwc_config>
+  <desktops number="4" />
+  <focus>
+    <followMouse>yes</followMouse>
+    <raiseOnFocus>yes</raiseOnFocus>
+    <raiseOnFocusDelay>500</raiseOnFocusDelay>
+  </focus>
+  <theme>
+    <name>Matcha-dark-azul</name>
+    <titlebar>
+      <layout>close,iconify,max:</layout>
+    </titlebar>
+  </theme>
+  <keyboard>
+    <numlock>on</numlock>
+    <keybind key="W-1"><action name="GoToDesktop" to="1" /></keybind>
+    <keybind key="W-2"><action name="GoToDesktop" to="2" /></keybind>
+    <keybind key="W-3"><action name="GoToDesktop" to="3" /></keybind>
+    <keybind key="W-4"><action name="GoToDesktop" to="4" /></keybind>
+    <keybind key="C-A-Left"><action name="GoToDesktop" to="left" wrap="no" /></keybind>
+    <keybind key="C-A-Right"><action name="GoToDesktop" to="right" wrap="no" /></keybind>
+    <keybind key="C-A-S-Left"><action name="SendToDesktop" to="left" follow="yes" wrap="no" /></keybind>
+    <keybind key="C-A-S-Right"><action name="SendToDesktop" to="right" follow="yes" wrap="no" /></keybind>
+    <keybind key="W-space"><action name="Execute" command="dms ipc spotlight toggle" /></keybind>
+    <keybind key="XF86AudioRaiseVolume" allowWhenLocked="yes"><action name="Execute" command="dms ipc audio increment 3" /></keybind>
+    <keybind key="XF86AudioLowerVolume" allowWhenLocked="yes"><action name="Execute" command="dms ipc audio decrement 3" /></keybind>
+    <keybind key="XF86AudioMute" allowWhenLocked="yes"><action name="Execute" command="dms ipc audio mute" /></keybind>
+    <keybind key="XF86AudioMicMute" allowWhenLocked="yes"><action name="Execute" command="dms ipc audio micmute" /></keybind>
+    <keybind key="F10" allowWhenLocked="yes"><action name="Execute" command="dms ipc mpris previous" /></keybind>
+    <keybind key="F12" allowWhenLocked="yes"><action name="Execute" command="dms ipc mpris next" /></keybind>
+    <keybind key="Pause" allowWhenLocked="yes"><action name="Execute" command="dms ipc mpris playPause" /></keybind>
+    <keybind key="XF86MonBrightnessUp" allowWhenLocked="yes"><action name="Execute" command='dms ipc brightness increment 5 ""' /></keybind>
+    <keybind key="XF86MonBrightnessDown" allowWhenLocked="yes"><action name="Execute" command='dms ipc brightness decrement 5 ""' /></keybind>
+    <keybind key="C-A-Delete"><action name="Execute" command="dms ipc processlist toggle" /></keybind>
+    <keybind key="W-A-l"><action name="Execute" command="dms ipc lock lock" /></keybind>
+    <keybind key="W-comma"><action name="Execute" command="dms ipc settings toggle" /></keybind>
+    <keybind key="W-m"><action name="Execute" command="dms ipc processlist toggle" /></keybind>
+    <keybind key="W-n"><action name="Execute" command="dms ipc notifications toggle" /></keybind>
+    <keybind key="W-S-n"><action name="Execute" command="dms ipc notepad toggle" /></keybind>
+    <keybind key="W-v"><action name="Execute" command="dms ipc clipboard toggle" /></keybind>
+    <keybind key="W-y"><action name="Execute" command="dms ipc dankdash wallpaper" /></keybind>
+    <keybind key="A-F4"><action name="Close" /></keybind>
+    <keybind key="W-Up"><action name="ToggleFullscreen" /></keybind>
+    <keybind key="C-A-s"><action name="Execute" command="systemctl suspend" /></keybind>
+    <keybind key="Print"><action name="Execute" command="dms screenshot" /></keybind>
+    <keybind key="C-Print"><action name="Execute" command="dms screenshot full" /></keybind>
+    <keybind key="W-e"><action name="Execute" command="xdg-open /home/jos" /></keybind>
+    <keybind key="W-t"><action name="Execute" command="wezterm" /></keybind>
+  </keyboard>
+  <mouse>
+    <default />
+    <context name="Root">
+      <mousebind button="Left" action="Press" />
+      <mousebind button="Middle" action="Press" />
+      <mousebind button="Right" action="Press" />
+      <mousebind button="Left" action="Click" />
+      <mousebind button="Middle" action="Click" />
+      <mousebind button="Right" action="Click" />
+    </context>
+  </mouse>
+</labwc_config>

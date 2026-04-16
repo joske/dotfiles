@@ -1,0 +1,3 @@
+dms run -d &
+xwayland-satellite &
+

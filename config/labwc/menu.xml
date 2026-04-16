@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+<menu id="root-menu" label="root-menu">
+  <menu id="Accessories" label="Accessories">
+    <item label="Accerciser">
+      <action name="Execute"><command>accerciser</command></action>
+    </item>
+    <item label="Albert">
+      <action name="Execute"><command>albert --platform xcb</command></action>
+    </item>
+    <item label="balenaEtcher">
+      <action name="Execute"><command>balena-etcher</command></action>
+    </item>
+    <item label="Bitwarden">
+      <action name="Execute"><command>bitwarden-desktop --ozone-platform=wayland</command></action>
+    </item>
+    <item label="Calculator">
+      <action name="Execute"><command>gnome-calculator</command></action>
+    </item>
+    <item label="Calendar">
+      <action name="Execute"><command>gnome-calendar</command></action>
+    </item>
+    <item label="Character Map">
+      <action name="Execute"><command>gucharmap</command></action>
+    </item>
+    <item label="Characters">
+      <action name="Execute"><command>/usr/bin/gnome-characters</command></action>
+    </item>
+    <item label="Clocks">
+      <action name="Execute"><command>gnome-clocks</command></action>
+    </item>
+    <item label="Connections">
+      <action name="Execute"><command>gnome-connections</command></action>
+    </item>
+    <item label="Console">
+      <action name="Execute"><command>kgx</command></action>
+    </item>
+    <item label="Dangerzone">
+      <action name="Execute"><command>dangerzone</command></action>
+    </item>
+    <item label="Disk Usage Analyzer">
+      <action name="Execute"><command>baobab</command></action>
+    </item>
+    <item label="Disks">
+      <action name="Execute"><command>gnome-disks</command></action>
+    </item>
+    <item label="Endeavour">
+      <action name="Execute"><command>endeavour</command></action>
+    </item>
+    <item label="Engrampa Archive Manager">
+      <action name="Execute"><command>engrampa</command></action>
+    </item>
+    <item label="Extension Manager">
+      <action name="Execute"><command>extension-manager</command></action>
+    </item>
+    <item label="Extensions">
+      <action name="Execute"><command>/usr/bin/gnome-extensions-app</command></action>
+    </item>
+    <item label="Files">
+      <action name="Execute"><command>nautilus --new-window</command></action>
+    </item>
+    <item label="Files">
+      <action name="Execute"><command>nemo</command></action>
+    </item>
+    <item label="Fonts">
+      <action name="Execute"><command>gnome-font-viewer</command></action>
+    </item>
+    <item label="gedit">
+      <action name="Execute"><command>gedit</command></action>
+    </item>
+    <item label="GVim">
+      <action name="Execute"><command>gvim -f</command></action>
+    </item>
+    <item label="Help">
+      <action name="Execute"><command>yelp</command></action>
+    </item>
+    <item label="HP Device Manager">
+      <action name="Execute"><command>hp-toolbox</command></action>
+    </item>
+    <item label="ipython">
+      <action name="Execute"><command>ipython</command></action>
+    </item>
+    <item label="Logs">
+      <action name="Execute"><command>gnome-logs</command></action>
+    </item>
+    <item label="Maps">
+      <action name="Execute"><command>gapplication launch org.gnome.Maps</command></action>
+    </item>
+    <item label="Mir Shell">
+      <action name="Execute"><command>bash --login -c miral-app</command></action>
+    </item>
+    <item label="Neon">
+      <action name="Execute"><command>/usr/bin/distrobox enter  neon</command></action>
+    </item>
+    <item label="Neovide">
+      <action name="Execute"><command>neovide</command></action>
+    </item>
+    <item label="Neovim">
+      <action name="Execute"><command>nvim</command></action>
+    </item>
+    <item label="Notes">
+      <action name="Execute"><command>bijiben</command></action>
+    </item>
+    <item label="Passwords and Keys">
+      <action name="Execute"><command>seahorse</command></action>
+    </item>
+    <item label="PCMan File Manager">
+      <action name="Execute"><command>pcmanfm</command></action>
+    </item>
+    <item label="PCManFM-Qt File Manager">
+      <action name="Execute"><command>pcmanfm-qt</command></action>
+    </item>
+    <item label="Plank Reloaded">
+      <action name="Execute"><command>plank</command></action>
+    </item>
+    <item label="Raspberry Pi Imager">
+      <action name="Execute"><command>/usr/bin/rpi-imager</command></action>
+    </item>
+    <item label="Screenshot">
+      <action name="Execute"><command>gnome-screenshot --interactive</command></action>
+    </item>
+    <item label="Software Token">
+      <action name="Execute"><command>stoken-gui</command></action>
+    </item>
+    <item label="Software Token (small)">
+      <action name="Execute"><command>stoken-gui --small</command></action>
+    </item>
+    <item label="Sysprof">
+      <action name="Execute"><command>sysprof</command></action>
+    </item>
+    <item label="Text Editor">
+      <action name="Execute"><command>gnome-text-editor</command></action>
+    </item>
+    <item label="Tour">
+      <action name="Execute"><command>gnome-tour</command></action>
+    </item>
+    <item label="Tweaks">
+      <action name="Execute"><command>gnome-tweaks</command></action>
+    </item>
+    <item label="Ubuntu">
+      <action name="Execute"><command>/usr/bin/distrobox enter  ubuntu</command></action>
+    </item>
+    <item label="Ventoy">
+      <action name="Execute"><command>ventoygui</command></action>
+    </item>
+    <item label="Vim">
+      <action name="Execute"><command>vim</command></action>
+    </item>
+    <item label="Virtual keyboard">
+      <action name="Execute"><command>cinnamon-dbus-command ToggleKeyboard</command></action>
+    </item>
+    <item label="Weather">
+      <action name="Execute"><command>gnome-weather</command></action>
+    </item>
+    <item label="WezTerm">
+      <action name="Execute"><command>wezterm start --cwd .</command></action>
+    </item>
+  </menu> <!-- Accessories -->
+  <menu id="Development" label="Development">
+    <item label="Accerciser">
+      <action name="Execute"><command>accerciser</command></action>
+    </item>
+    <item label="CMake">
+      <action name="Execute"><command>cmake-gui</command></action>
+    </item>
+    <item label="D-Spy">
+      <action name="Execute"><command>d-spy</command></action>
+    </item>
+    <item label="Devhelp">
+      <action name="Execute"><command>devhelp</command></action>
+    </item>
+    <item label="Diffuse">
+      <action name="Execute"><command>diffuse -s</command></action>
+    </item>
+    <item label="distcc monitor">
+      <action name="Execute"><command>distccmon-gnome</command></action>
+    </item>
+    <item label="Eclipse IDE">
+      <action name="Execute"><command>/home/jos/Software/eclipse/eclipse</command></action>
+    </item>
+    <item label="Electron 36">
+      <action name="Execute"><command>electron36</command></action>
+    </item>
+    <item label="Electron 37">
+      <action name="Execute"><command>electron37</command></action>
+    </item>
+    <item label="GHex">
+      <action name="Execute"><command>ghex</command></action>
+    </item>
+    <item label="gitg">
+      <action name="Execute"><command>gitg --no-wd</command></action>
+    </item>
+    <item label="Glade">
+      <action name="Execute"><command>glade</command></action>
+    </item>
+    <item label="Heaptrack">
+      <action name="Execute"><command>heaptrack_gui</command></action>
+    </item>
+    <item label="ipython">
+      <action name="Execute"><command>ipython</command></action>
+    </item>
+    <item label="KDiff3">
+      <action name="Execute"><command>kdiff3</command></action>
+    </item>
+    <item label="Meld">
+      <action name="Execute"><command>meld</command></action>
+    </item>
+    <item label="Neovim">
+      <action name="Execute"><command>nvim</command></action>
+    </item>
+    <item label="Qt Assistant">
+      <action name="Execute"><command>assistant6</command></action>
+    </item>
+    <item label="Qt D-Bus Viewer">
+      <action name="Execute"><command>qdbusviewer6</command></action>
+    </item>
+    <item label="Qt Linguist">
+      <action name="Execute"><command>linguist6</command></action>
+    </item>
+    <item label="Qt Widgets Designer">
+      <action name="Execute"><command>designer6</command></action>
+    </item>
+    <item label="Sublime Merge">
+      <action name="Execute"><command>/opt/sublime_merge/sublime_merge</command></action>
+    </item>
+    <item label="Sublime Text">
+      <action name="Execute"><command>/usr/bin/subl</command></action>
+    </item>
+    <item label="Sysprof">
+      <action name="Execute"><command>sysprof</command></action>
+    </item>
+    <item label="Visual Studio Code">
+      <action name="Execute"><command>/usr/bin/code</command></action>
+    </item>
+  </menu> <!-- Development -->
+  <menu id="Games" label="Games">
+    <item label="Cemu">
+      <action name="Execute"><command>cemu</command></action>
+    </item>
+    <item label="Dolphin Emulator">
+      <action name="Execute"><command>dolphin-emu</command></action>
+    </item>
+    <item label="RetroArch">
+      <action name="Execute"><command>retroarch</command></action>
+    </item>
+    <item label="RPCS3">
+      <action name="Execute"><command>rpcs3</command></action>
+    </item>
+    <item label="Ryujinx">
+      <action name="Execute"><command>ryujinx</command></action>
+    </item>
+    <item label="sudachi">
+      <action name="Execute"><command>sudachi</command></action>
+    </item>
+    <item label="Yuzu">
+      <action name="Execute"><command>/home/jos/.local/bin/yuzu</command></action>
+    </item>
+  </menu> <!-- Games -->
+  <menu id="Graphics" label="Graphics">
+    <item label="Document Scanner">
+      <action name="Execute"><command>simple-scan</command></action>
+    </item>
+    <item label="Document Viewer">
+      <action name="Execute"><command>evince</command></action>
+    </item>
+    <item label="Document Viewer">
+      <action name="Execute"><command>papers</command></action>
+    </item>
+    <item label="Eye of MATE Image Viewer">
+      <action name="Execute"><command>eom</command></action>
+    </item>
+    <item label="GNU Image Manipulation Program">
+      <action name="Execute"><command>gimp-3.2</command></action>
+    </item>
+    <item label="Image Viewer">
+      <action name="Execute"><command>loupe</command></action>
+    </item>
+    <item label="Inkscape">
+      <action name="Execute"><command>inkscape</command></action>
+    </item>
+    <item label="MATE Color Selection">
+      <action name="Execute"><command>mate-color-select</command></action>
+    </item>
+    <item label="OCRFeeder">
+      <action name="Execute"><command>ocrfeeder</command></action>
+    </item>
+    <item label="ScreenGrab">
+      <action name="Execute"><command>screengrab</command></action>
+    </item>
+    <item label="XDvi">
+      <action name="Execute"><command>xdvi</command></action>
+    </item>
+  </menu> <!-- Graphics -->
+  <menu id="Internet" label="Internet">
+    <item label="Advanced Network Configuration">
+      <action name="Execute"><command>nm-connection-editor</command></action>
+    </item>
+    <item label="Avahi SSH Server Browser">
+      <action name="Execute"><command>/usr/bin/bssh</command></action>
+    </item>
+    <item label="Avahi VNC Server Browser">
+      <action name="Execute"><command>/usr/bin/bvnc</command></action>
+    </item>
+    <item label="Chromium">
+      <action name="Execute"><command>/usr/bin/chromium</command></action>
+    </item>
+    <item label="Connections">
+      <action name="Execute"><command>gnome-connections</command></action>
+    </item>
+    <item label="Firefox">
+      <action name="Execute"><command>/usr/lib/firefox/firefox</command></action>
+    </item>
+    <item label="Google Chrome">
+      <action name="Execute"><command>/usr/bin/google-chrome-stable</command></action>
+    </item>
+    <item label="Insync">
+      <action name="Execute"><command>env QT_QPA_PLATFORM=xcb insync start</command></action>
+    </item>
+    <item label="Polari">
+      <action name="Execute"><command>gapplication launch org.gnome.Polari</command></action>
+    </item>
+    <item label="Remmina">
+      <action name="Execute"><command>remmina-file-wrapper</command></action>
+    </item>
+    <item label="Slack">
+      <action name="Execute"><command>/usr/bin/slack -s  --password-store=gnome</command></action>
+    </item>
+    <item label="Telegram">
+      <action name="Execute"><command>Telegram</command></action>
+    </item>
+    <item label="Transmission">
+      <action name="Execute"><command>transmission-gtk</command></action>
+    </item>
+    <item label="uGet">
+      <action name="Execute"><command>uget-gtk</command></action>
+    </item>
+    <item label="WasIstLos">
+      <action name="Execute"><command>wasistlos</command></action>
+    </item>
+    <item label="Web">
+      <action name="Execute"><command>epiphany</command></action>
+    </item>
+    <item label="Wireshark">
+      <action name="Execute"><command>wireshark</command></action>
+    </item>
+  </menu> <!-- Internet -->
+  <menu id="Multimedia" label="Multimedia">
+    <item label="Audacious">
+      <action name="Execute"><command>audacious</command></action>
+    </item>
+    <item label="Audacity">
+      <action name="Execute"><command>env GDK_BACKEND=x11 UBUNTU_MENUPROXY=0 audacity</command></action>
+    </item>
+    <item label="Audio Player">
+      <action name="Execute"><command>org.gnome.Decibels</command></action>
+    </item>
+    <item label="Camera">
+      <action name="Execute"><command>snapshot</command></action>
+    </item>
+    <item label="HandBrake">
+      <action name="Execute"><command>ghb</command></action>
+    </item>
+    <item label="Lollypop">
+      <action name="Execute"><command>lollypop</command></action>
+    </item>
+    <item label="mpv Media Player">
+      <action name="Execute"><command>mpv --player-operation-mode=pseudo-gui --</command></action>
+    </item>
+    <item label="Music">
+      <action name="Execute"><command>gnome-music</command></action>
+    </item>
+    <item label="PulseAudio Volume Control">
+      <action name="Execute"><command>pavucontrol-qt</command></action>
+    </item>
+    <item label="Qt V4L2 test Utility">
+      <action name="Execute"><command>qv4l2</command></action>
+    </item>
+    <item label="Qt V4L2 video capture utility">
+      <action name="Execute"><command>qvidcap</command></action>
+    </item>
+    <item label="Shortwave">
+      <action name="Execute"><command>shortwave</command></action>
+    </item>
+    <item label="Spotify">
+      <action name="Execute"><command>spotify --uri=</command></action>
+    </item>
+    <item label="Video Player">
+      <action name="Execute"><command>showtime --new-window</command></action>
+    </item>
+    <item label="VLC media player">
+      <action name="Execute"><command>/usr/bin/vlc --started-from-file</command></action>
+    </item>
+    <item label="Volume Control">
+      <action name="Execute"><command>pavucontrol</command></action>
+    </item>
+  </menu> <!-- Multimedia -->
+  <menu id="Office" label="Office">
+    <item label="AbiWord">
+      <action name="Execute"><command>abiword</command></action>
+    </item>
+    <item label="Atril Document Viewer">
+      <action name="Execute"><command>atril</command></action>
+    </item>
+    <item label="Calendar">
+      <action name="Execute"><command>gnome-calendar</command></action>
+    </item>
+    <item label="Calibre">
+      <action name="Execute"><command>calibre --detach</command></action>
+    </item>
+    <item label="Contacts">
+      <action name="Execute"><command>gnome-contacts</command></action>
+    </item>
+    <item label="Dangerzone">
+      <action name="Execute"><command>dangerzone</command></action>
+    </item>
+    <item label="Document Viewer">
+      <action name="Execute"><command>evince</command></action>
+    </item>
+    <item label="Document Viewer">
+      <action name="Execute"><command>papers</command></action>
+    </item>
+    <item label="E-book editor">
+      <action name="Execute"><command>ebook-edit --detach</command></action>
+    </item>
+    <item label="E-book viewer">
+      <action name="Execute"><command>ebook-viewer --detach</command></action>
+    </item>
+    <item label="Foliate">
+      <action name="Execute"><command>foliate</command></action>
+    </item>
+    <item label="Gnumeric">
+      <action name="Execute"><command>gnumeric --name org.gnumeric.gnumeric</command></action>
+    </item>
+    <item label="LRF viewer">
+      <action name="Execute"><command>lrfviewer</command></action>
+    </item>
+    <item label="OCRFeeder">
+      <action name="Execute"><command>ocrfeeder</command></action>
+    </item>
+    <item label="PDF Arranger">
+      <action name="Execute"><command>pdfarranger</command></action>
+    </item>
+  </menu> <!-- Office -->
+  <menu id="Settings" label="Settings">
+    <item label="Accessibility">
+      <action name="Execute"><command>cinnamon-settings accessibility</command></action>
+    </item>
+    <item label="Account details">
+      <action name="Execute"><command>cinnamon-settings user</command></action>
+    </item>
+    <item label="Actions">
+      <action name="Execute"><command>cinnamon-settings actions</command></action>
+    </item>
+    <item label="Add/Remove Software">
+      <action name="Execute"><command>pamac-manager</command></action>
+    </item>
+    <item label="Advanced Network Configuration">
+      <action name="Execute"><command>nm-connection-editor</command></action>
+    </item>
+    <item label="Applets">
+      <action name="Execute"><command>cinnamon-settings applets</command></action>
+    </item>
+    <item label="Backgrounds">
+      <action name="Execute"><command>cinnamon-settings backgrounds</command></action>
+    </item>
+    <item label="Bluetooth Adapters">
+      <action name="Execute"><command>blueman-adapters</command></action>
+    </item>
+    <item label="Bluetooth Manager">
+      <action name="Execute"><command>blueman-manager</command></action>
+    </item>
+    <item label="Color">
+      <action name="Execute"><command>cinnamon-settings color</command></action>
+    </item>
+    <item label="Date &amp; Time">
+      <action name="Execute"><command>cinnamon-settings calendar</command></action>
+    </item>
+    <item label="Desklets">
+      <action name="Execute"><command>cinnamon-settings desklets</command></action>
+    </item>
+    <item label="Desktop">
+      <action name="Execute"><command>pcmanfm-qt --desktop-pref=general</command></action>
+    </item>
+    <item label="Desktop">
+      <action name="Execute"><command>cinnamon-settings desktop</command></action>
+    </item>
+    <item label="Desktop Preferences">
+      <action name="Execute"><command>pcmanfm --desktop-pref</command></action>
+    </item>
+    <item label="Display">
+      <action name="Execute"><command>cinnamon-settings display</command></action>
+    </item>
+    <item label="Effects">
+      <action name="Execute"><command>cinnamon-settings effects</command></action>
+    </item>
+    <item label="Extensions">
+      <action name="Execute"><command>cinnamon-settings extensions</command></action>
+    </item>
+    <item label="Firewall Configuration">
+      <action name="Execute"><command>gufw</command></action>
+    </item>
+    <item label="Font Selection">
+      <action name="Execute"><command>cinnamon-settings fonts</command></action>
+    </item>
+    <item label="General">
+      <action name="Execute"><command>cinnamon-settings general</command></action>
+    </item>
+    <item label="Gestures">
+      <action name="Execute"><command>cinnamon-settings gestures</command></action>
+    </item>
+    <item label="GPaste">
+      <action name="Execute"><command>/usr/lib/gpaste/gpaste-ui</command></action>
+    </item>
+    <item label="GPaste Preferences">
+      <action name="Execute"><command>/usr/lib/gpaste/gpaste-preferences</command></action>
+    </item>
+    <item label="Graphics Tablet">
+      <action name="Execute"><command>cinnamon-settings wacom</command></action>
+    </item>
+    <item label="Hot Corners">
+      <action name="Execute"><command>cinnamon-settings hotcorner</command></action>
+    </item>
+    <item label="IBus Preferences">
+      <action name="Execute"><command>ibus-setup</command></action>
+    </item>
+    <item label="Keyboard">
+      <action name="Execute"><command>cinnamon-settings keyboard</command></action>
+    </item>
+    <item label="Login Window">
+      <action name="Execute"><command>pkexec lightdm-settings</command></action>
+    </item>
+    <item label="Manage Printing">
+      <action name="Execute"><command>xdg-open http://localhost:631/</command></action>
+    </item>
+    <item label="Mouse and Touchpad">
+      <action name="Execute"><command>cinnamon-settings mouse</command></action>
+    </item>
+    <item label="Network">
+      <action name="Execute"><command>cinnamon-settings network</command></action>
+    </item>
+    <item label="Night Light">
+      <action name="Execute"><command>cinnamon-settings nightlight</command></action>
+    </item>
+    <item label="Notifications">
+      <action name="Execute"><command>cinnamon-settings notifications</command></action>
+    </item>
+    <item label="Panel">
+      <action name="Execute"><command>cinnamon-settings panel</command></action>
+    </item>
+    <item label="Passwords and Keys">
+      <action name="Execute"><command>seahorse</command></action>
+    </item>
+    <item label="Power Management">
+      <action name="Execute"><command>cinnamon-settings power</command></action>
+    </item>
+    <item label="Preferred Applications">
+      <action name="Execute"><command>cinnamon-settings default</command></action>
+    </item>
+    <item label="Preferred Applications">
+      <action name="Execute"><command>libfm-pref-apps</command></action>
+    </item>
+    <item label="Print Settings">
+      <action name="Execute"><command>system-config-printer</command></action>
+    </item>
+    <item label="Privacy">
+      <action name="Execute"><command>cinnamon-settings privacy</command></action>
+    </item>
+    <item label="PulseAudio Volume Control">
+      <action name="Execute"><command>pavucontrol-qt</command></action>
+    </item>
+    <item label="Remmina">
+      <action name="Execute"><command>remmina-file-wrapper</command></action>
+    </item>
+    <item label="Rygel Preferences">
+      <action name="Execute"><command>rygel-preferences</command></action>
+    </item>
+    <item label="Screensaver">
+      <action name="Execute"><command>cinnamon-settings screensaver</command></action>
+    </item>
+    <item label="Settings">
+      <action name="Execute"><command>gnome-control-center</command></action>
+    </item>
+    <item label="Sound">
+      <action name="Execute"><command>cinnamon-settings sound</command></action>
+    </item>
+    <item label="Startup Applications">
+      <action name="Execute"><command>cinnamon-settings startup</command></action>
+    </item>
+    <item label="System Info">
+      <action name="Execute"><command>cinnamon-settings info</command></action>
+    </item>
+    <item label="System Settings">
+      <action name="Execute"><command>env WEBKIT_DISABLE_COMPOSITING_MODE=1 cinnamon-settings</command></action>
+    </item>
+    <item label="Themes">
+      <action name="Execute"><command>cinnamon-settings themes</command></action>
+    </item>
+    <item label="Thunderbolt">
+      <action name="Execute"><command>cinnamon-settings thunderbolt</command></action>
+    </item>
+    <item label="Users and Groups">
+      <action name="Execute"><command>cinnamon-settings-users</command></action>
+    </item>
+    <item label="Volume Control">
+      <action name="Execute"><command>pavucontrol</command></action>
+    </item>
+    <item label="Windows">
+      <action name="Execute"><command>cinnamon-settings windows</command></action>
+    </item>
+    <item label="Workspaces">
+      <action name="Execute"><command>cinnamon-settings workspaces</command></action>
+    </item>
+  </menu> <!-- Settings -->
+  <menu id="System" label="System">
+    <item label="Add/Remove Software">
+      <action name="Execute"><command>pamac-manager</command></action>
+    </item>
+    <item label="Alacritty">
+      <action name="Execute"><command>alacritty</command></action>
+    </item>
+    <item label="AMDGPU TOP (GUI)">
+      <action name="Execute"><command>amdgpu_top --gui</command></action>
+    </item>
+    <item label="Avahi Zeroconf Browser">
+      <action name="Execute"><command>/usr/bin/avahi-discover</command></action>
+    </item>
+    <item label="btop++">
+      <action name="Execute"><command>btop</command></action>
+    </item>
+    <item label="Cemu">
+      <action name="Execute"><command>cemu</command></action>
+    </item>
+    <item label="Color Profile Viewer">
+      <action name="Execute"><command>gcm-viewer</command></action>
+    </item>
+    <item label="Console">
+      <action name="Execute"><command>kgx</command></action>
+    </item>
+    <item label="dconf Editor">
+      <action name="Execute"><command>dconf-editor</command></action>
+    </item>
+    <item label="Disk Usage Analyzer">
+      <action name="Execute"><command>baobab</command></action>
+    </item>
+    <item label="Dolphin Emulator">
+      <action name="Execute"><command>dolphin-emu</command></action>
+    </item>
+    <item label="Firewall Configuration">
+      <action name="Execute"><command>gufw</command></action>
+    </item>
+    <item label="Foot">
+      <action name="Execute"><command>foot</command></action>
+    </item>
+    <item label="Foot Client">
+      <action name="Execute"><command>footclient</command></action>
+    </item>
+    <item label="Foot Server">
+      <action name="Execute"><command>foot --server</command></action>
+    </item>
+    <item label="FS-UAE Launcher">
+      <action name="Execute"><command>fs-uae-launcher</command></action>
+    </item>
+    <item label="Ghostty">
+      <action name="Execute"><command>/usr/bin/ghostty --gtk-single-instance=true</command></action>
+    </item>
+    <item label="GNOME System Monitor">
+      <action name="Execute"><command>gnome-system-monitor</command></action>
+    </item>
+    <item label="GParted">
+      <action name="Execute"><command>/usr/bin/gparted</command></action>
+    </item>
+    <item label="Hardware Locality lstopo">
+      <action name="Execute"><command>lstopo</command></action>
+    </item>
+    <item label="Htop">
+      <action name="Execute"><command>htop</command></action>
+    </item>
+    <item label="Login Window">
+      <action name="Execute"><command>pkexec lightdm-settings</command></action>
+    </item>
+    <item label="Logs">
+      <action name="Execute"><command>gnome-logs</command></action>
+    </item>
+    <item label="LSHW">
+      <action name="Execute"><command>/usr/sbin/gtk-lshw</command></action>
+    </item>
+    <item label="Manage Printing">
+      <action name="Execute"><command>xdg-open http://localhost:631/</command></action>
+    </item>
+    <item label="Neon">
+      <action name="Execute"><command>/usr/bin/distrobox enter  neon</command></action>
+    </item>
+    <item label="nvtop">
+      <action name="Execute"><command>nvtop</command></action>
+    </item>
+    <item label="OpenJDK Java 11 Console">
+      <action name="Execute"><command>/usr/lib/jvm/java-11-openjdk/bin/jconsole</command></action>
+    </item>
+    <item label="OpenJDK Java 11 Shell">
+      <action name="Execute"><command>/usr/lib/jvm/java-11-openjdk/bin/jshell</command></action>
+    </item>
+    <item label="OpenJDK Java 21 Console">
+      <action name="Execute"><command>/usr/lib/jvm/java-21-openjdk/bin/jconsole</command></action>
+    </item>
+    <item label="OpenJDK Java 21 Shell">
+      <action name="Execute"><command>/usr/lib/jvm/java-21-openjdk/bin/jshell</command></action>
+    </item>
+    <item label="Oracle VirtualBox">
+      <action name="Execute"><command>VirtualBox</command></action>
+    </item>
+    <item label="Parental Controls">
+      <action name="Execute"><command>malcontent-control</command></action>
+    </item>
+    <item label="PCMan File Manager">
+      <action name="Execute"><command>pcmanfm</command></action>
+    </item>
+    <item label="Print Settings">
+      <action name="Execute"><command>system-config-printer</command></action>
+    </item>
+    <item label="ranger">
+      <action name="Execute"><command>ranger</command></action>
+    </item>
+    <item label="Resources">
+      <action name="Execute"><command>resources</command></action>
+    </item>
+    <item label="RetroArch">
+      <action name="Execute"><command>retroarch</command></action>
+    </item>
+    <item label="RPCS3">
+      <action name="Execute"><command>rpcs3</command></action>
+    </item>
+    <item label="Ryujinx">
+      <action name="Execute"><command>ryujinx</command></action>
+    </item>
+    <item label="Software">
+      <action name="Execute"><command>gnome-software</command></action>
+    </item>
+    <item label="sudachi">
+      <action name="Execute"><command>sudachi</command></action>
+    </item>
+    <item label="System Monitor">
+      <action name="Execute"><command>gnome-system-monitor</command></action>
+    </item>
+    <item label="Timeshift">
+      <action name="Execute"><command>timeshift-launcher</command></action>
+    </item>
+    <item label="Ubuntu">
+      <action name="Execute"><command>/usr/bin/distrobox enter  ubuntu</command></action>
+    </item>
+    <item label="Users and Groups">
+      <action name="Execute"><command>cinnamon-settings-users</command></action>
+    </item>
+    <item label="UXTerm">
+      <action name="Execute"><command>uxterm</command></action>
+    </item>
+    <item label="WezTerm">
+      <action name="Execute"><command>wezterm start --cwd .</command></action>
+    </item>
+    <item label="XTerm">
+      <action name="Execute"><command>xterm</command></action>
+    </item>
+    <item label="Yuzu">
+      <action name="Execute"><command>/home/jos/.local/bin/yuzu</command></action>
+    </item>
+  </menu> <!-- System -->
+  <menu id="Other" label="Other">
+    <item label="GKrellM System Monitor">
+      <action name="Execute"><command>gkrellm</command></action>
+    </item>
+    <item label="Google Chat">
+      <action name="Execute"><command>/opt/google/chrome/google-chrome --profile-directory=Default --app-id=mdpkiolbdkhdjpekfbkbmhigcaggjagi</command></action>
+    </item>
+    <item label="hp-uiscan">
+      <action name="Execute"><command>/usr/bin/hp-uiscan</command></action>
+    </item>
+    <item label="ripperX">
+      <action name="Execute"><command>ripperX</command></action>
+    </item>
+    <item label="Steam">
+      <action name="Execute"><command>bottles-cli run -p Steam -b 'steam' --</command></action>
+    </item>
+    <item label="WORDVIEW">
+      <action name="Execute"><command>bottles-cli run -p WORDVIEW -b 'wordview' --</command></action>
+    </item>
+    <item label="YouTube">
+      <action name="Execute"><command>/opt/google/chrome/google-chrome --profile-directory=Default --app-id=agimnkijcaahngcdmfeangaknmldooml</command></action>
+    </item>
+  </menu> <!-- Other -->
+</menu> <!-- root-menu -->
+</openbox_menu>
