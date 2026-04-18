@@ -12,6 +12,7 @@
     </titlebar>
   </theme>
   <keyboard>
+    <default />
     <numlock>on</numlock>
     <keybind key="W-1"><action name="GoToDesktop" to="1" /></keybind>
     <keybind key="W-2"><action name="GoToDesktop" to="2" /></keybind>
@@ -56,6 +57,12 @@
       <mousebind button="Left" action="Click" />
       <mousebind button="Middle" action="Click" />
       <mousebind button="Right" action="Click" />
+      <mousebind direction="Up" action="Scroll">
+        <action name="GoToDesktop" to="left" wrap="no" />
+      </mousebind>
+      <mousebind direction="Down" action="Scroll">
+        <action name="GoToDesktop" to="right" wrap="no" />
+      </mousebind>
     </context>
   </mouse>
 </labwc_config>
