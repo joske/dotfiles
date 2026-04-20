@@ -3,7 +3,8 @@
 set -euo pipefail
 
 usage() {
-  echo "Usage: $0 [-s session-name] <dir> [dir...]"
+  echo "Usage: $0 [-s session-name] <path> [path...]"
+  echo "  First path must be a directory (used as working directory)."
   exit 1
 }
 
@@ -18,23 +19,43 @@ if [[ $# -lt 1 ]]; then
   usage
 fi
 
-DIRS=()
+PATHS=()
 for arg in "$@"; do
-  d=$(realpath "$arg")
-  if [[ ! -d "$d" ]]; then
-    echo "Error: '$d' is not a directory"
+  p=$(realpath "$arg")
+  if [[ ! -e "$p" ]]; then
+    echo "Error: '$p' does not exist"
     exit 1
   fi
-  if [[ ! -r "$d" ]]; then
-    echo "Error: '$d' is not readable"
+  if [[ ! -r "$p" ]]; then
+    echo "Error: '$p' is not readable"
     exit 1
   fi
-  DIRS+=("$d")
+  PATHS+=("$p")
 done
+
+if [[ ! -d "${PATHS[0]}" ]]; then
+  echo "Error: first path '${PATHS[0]}' must be a directory"
+  exit 1
+fi
 
 CLAUDE_ARGS=(--dangerously-skip-permissions)
 if [[ -n "$NAME" ]]; then
   CLAUDE_ARGS+=(--resume "$NAME")
+fi
+
+if [[ ! -L "$HOME/.claude.json" ]]; then
+  if [[ -f "$HOME/.claude.json" ]]; then
+    if [[ -e "$HOME/.claude/.claude.json" ]]; then
+      echo "Error: ~/.claude.json is a regular file but ~/.claude/.claude.json already exists; resolve manually"
+      exit 1
+    fi
+    mv "$HOME/.claude.json" "$HOME/.claude/.claude.json"
+    ln -s .claude/.claude.json "$HOME/.claude.json"
+    echo "Migrated ~/.claude.json into ~/.claude/ and symlinked"
+  elif [[ -e "$HOME/.claude/.claude.json" ]]; then
+    ln -s .claude/.claude.json "$HOME/.claude.json"
+    echo "Created ~/.claude.json symlink into ~/.claude/"
+  fi
 fi
 
 BWRAP_ARGS=(
@@ -52,7 +73,7 @@ BWRAP_ARGS=(
   --setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
   --ro-bind "$HOME" "$HOME"
   --bind "$HOME/.claude" "$HOME/.claude"
-  --bind "$HOME/.claude.json" "$HOME/.claude.json"
+  --setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
   --bind "$HOME/.local/state/claude" "$HOME/.local/state/claude"
   --bind "$HOME/.npm" "$HOME/.npm"
   --bind "$HOME/.cargo" "$HOME/.cargo"
@@ -60,11 +81,11 @@ BWRAP_ARGS=(
   --bind "$HOME/.cache" "$HOME/.cache"
 )
 
-for d in "${DIRS[@]}"; do
-  BWRAP_ARGS+=(--bind "$d" "$d")
+for p in "${PATHS[@]}"; do
+  BWRAP_ARGS+=(--bind "$p" "$p")
 done
 
-BWRAP_ARGS+=(--chdir "${DIRS[0]}")
+BWRAP_ARGS+=(--chdir "${PATHS[0]}")
 
 if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
   BWRAP_ARGS+=(--ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
