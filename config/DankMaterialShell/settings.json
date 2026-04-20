@@ -467,6 +467,10 @@
       ],
       "rightWidgets": [
         {
+          "id": "idleInhibitor",
+          "enabled": true
+        },
+        {
           "id": "systemTray",
           "enabled": true
         },
