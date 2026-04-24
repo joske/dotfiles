@@ -32,6 +32,7 @@
     <keybind key="Pause" allowWhenLocked="yes"><action name="Execute" command="dms ipc mpris playPause" /></keybind>
     <keybind key="XF86MonBrightnessUp" allowWhenLocked="yes"><action name="Execute" command='dms ipc brightness increment 5 ""' /></keybind>
     <keybind key="XF86MonBrightnessDown" allowWhenLocked="yes"><action name="Execute" command='dms ipc brightness decrement 5 ""' /></keybind>
+    <keybind key="XF86Calculator"><action name="Execute" command='gnome-calculator' /></keybind>
     <keybind key="C-A-Delete"><action name="Execute" command="dms ipc processlist toggle" /></keybind>
     <keybind key="W-A-l"><action name="Execute" command="dms ipc lock lock" /></keybind>
     <keybind key="C-A-l"><action name="Execute" command="dms ipc lock lock" /></keybind>
