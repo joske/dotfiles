@@ -67,4 +67,12 @@
       </mousebind>
     </context>
   </mouse>
+  <windowRules>
+    <windowRule identifier="Slack">
+      <action name="SendToDesktop" to="2" follow="yes" />
+    </windowRule>
+    <windowRule identifier="org.wezfurlong.wezterm">
+      <action name="ToggleOmnipresent" />
+    </windowRule>
+  </windowRules>
 </labwc_config>
