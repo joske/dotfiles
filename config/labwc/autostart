@@ -1,3 +1,4 @@
 dms run -d &
 xwayland-satellite &
+insync &
 
