@@ -69,7 +69,7 @@ BWRAP_ARGS=(
 	--proc /proc
 	--dev /dev
 	--tmpfs /run
-	--dir "/run/user/$(id -u)"
+	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
 	--ro-bind "$HOME" "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
@@ -81,6 +81,10 @@ BWRAP_ARGS=(
 	--bind "$HOME/.cache" "$HOME/.cache"
 	--bind "$HOME/.codex" "$HOME/.codex"
 	--bind "$HOME/.docker" "$HOME/.docker"
+	--bind "/tmp/.X11-unix" "/tmp/.X11-unix"
+	--bind "/tmp/.ICE-unix" "/tmp/.ICE-unix"
+	--bind "/tmp/.font-unix" "/tmp/.font-unix"
+	--bind "/tmp/.XIM-unix" "/tmp/.XIM-unix"
 	--bind /var/run/docker.sock /var/run/docker.sock
 )
 
