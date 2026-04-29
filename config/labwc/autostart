@@ -1,4 +1,4 @@
-dms run -d &
 xwayland-satellite &
 insync start
+systemctl --user start labwc-session.target
 
