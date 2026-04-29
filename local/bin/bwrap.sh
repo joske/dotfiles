@@ -3,17 +3,27 @@
 set -euo pipefail
 
 usage() {
-	echo "Usage: $0 [-s session-name] <path> [path...]"
+	echo "Usage: $0 [-s session-name] [-a agent] <path> [path...]"
 	echo "  First path must be a directory (used as working directory)."
+	echo "  -a agent: 'claude' (default) or 'codex'"
 	exit 1
 }
 
 NAME=""
-if [[ "${1:-}" == "-s" ]]; then
-	[[ $# -ge 2 ]] || usage
-	NAME="$2"
-	shift 2
-fi
+AGENT="claude"
+while true; do
+	if [[ "${1:-}" == "-s" ]]; then
+		[[ $# -ge 2 ]] || usage
+		NAME="$2"
+		shift 2
+	elif [[ "${1:-}" == "-a" ]]; then
+		[[ $# -ge 2 ]] || usage
+		AGENT="$2"
+		shift 2
+	else
+		break
+	fi
+done
 
 if [[ $# -lt 1 ]]; then
 	usage
@@ -38,9 +48,19 @@ if [[ ! -d "${PATHS[0]}" ]]; then
 	exit 1
 fi
 
-CLAUDE_ARGS=(--dangerously-skip-permissions)
-if [[ -n "$NAME" ]]; then
-	CLAUDE_ARGS+=(--resume "$NAME")
+if [[ "$AGENT" == "codex" ]]; then
+	AGENT_CMD=(codex -a never)
+	if [[ -n "$NAME" ]]; then
+		AGENT_CMD+=(resume "$NAME")
+	fi
+elif [[ "$AGENT" == "claude" ]]; then
+	AGENT_CMD=(claude --dangerously-skip-permissions)
+	if [[ -n "$NAME" ]]; then
+		AGENT_CMD+=(--resume "$NAME")
+	fi
+else
+	echo "Error: unknown agent '$AGENT' (supported: claude, codex)"
+	exit 1
 fi
 
 if [[ ! -L "$HOME/.claude.json" ]]; then
@@ -99,6 +119,6 @@ if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
 	BWRAP_ARGS+=(--setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK")
 fi
 
-BWRAP_ARGS+=(--die-with-parent -- claude "${CLAUDE_ARGS[@]}")
+BWRAP_ARGS+=(--die-with-parent -- "${AGENT_CMD[@]}")
 
 exec bwrap "${BWRAP_ARGS[@]}"
