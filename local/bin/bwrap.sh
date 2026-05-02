@@ -3,16 +3,21 @@
 set -euo pipefail
 
 usage() {
-	echo "Usage: $0 [-s session-name] [-a agent] <path> [path...]"
+	echo "Usage: $0 [-d] [-s session-name] [-a agent] <path> [path...]"
 	echo "  First path must be a directory (used as working directory)."
 	echo "  -a agent: 'claude' (default) or 'codex'"
+	echo "  -d: run bash instead of the selected agent for debugging"
 	exit 1
 }
 
 NAME=""
 AGENT="claude"
+DEBUG=0
 while true; do
-	if [[ "${1:-}" == "-s" ]]; then
+	if [[ "${1:-}" == "-d" ]]; then
+		DEBUG=1
+		shift
+	elif [[ "${1:-}" == "-s" ]]; then
 		[[ $# -ge 2 ]] || usage
 		NAME="$2"
 		shift 2
@@ -48,13 +53,15 @@ if [[ ! -d "${PATHS[0]}" ]]; then
 	exit 1
 fi
 
-if [[ "$AGENT" == "codex" ]]; then
+if [[ "$DEBUG" -eq 1 ]]; then
+	AGENT_CMD=(bash)
+elif [[ "$AGENT" == "codex" ]]; then
 	AGENT_CMD=(codex -a never)
 	if [[ -n "$NAME" ]]; then
 		AGENT_CMD+=(resume "$NAME")
 	fi
 elif [[ "$AGENT" == "claude" ]]; then
-	AGENT_CMD=(claude --dangerously-skip-permissions)
+	AGENT_CMD=(claude --dangerously-skip-permissions --resume)
 	if [[ -n "$NAME" ]]; then
 		AGENT_CMD+=(--resume "$NAME")
 	fi
@@ -86,16 +93,19 @@ BWRAP_ARGS=(
 	--ro-bind /etc /etc
 	--dir /tmp
 	--dir /var
+	--ro-bind /opt /opt
 	--proc /proc
 	--dev /dev
 	--tmpfs /run
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
-	--ro-bind "$HOME" "$HOME"
+	--ro-bind "$HOME" "$HOME/realhome"
+	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
 	--bind "$HOME/.local/state/claude" "$HOME/.local/state/claude"
 	--bind "$HOME/.npm" "$HOME/.npm"
+	--bind "$HOME/.e16" "$HOME/.e16"
 	--bind "$HOME/.cargo" "$HOME/.cargo"
 	--bind "$HOME/.rustup" "$HOME/.rustup"
 	--bind "$HOME/.cache" "$HOME/.cache"
