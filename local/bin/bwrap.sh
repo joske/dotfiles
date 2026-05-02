@@ -86,6 +86,7 @@ if [[ ! -L "$HOME/.claude.json" ]]; then
 fi
 
 BWRAP_ARGS=(
+	--ro-bind /boot /boot
 	--ro-bind /usr /usr
 	--symlink usr/bin /bin
 	--symlink usr/lib /lib
@@ -96,6 +97,7 @@ BWRAP_ARGS=(
 	--ro-bind /opt /opt
 	--proc /proc
 	--dev /dev
+	--bind /dev/kvm /dev/kvm
 	--tmpfs /run
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
