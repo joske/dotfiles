@@ -60,6 +60,11 @@ elif [[ "$AGENT" == "codex" ]]; then
 	if [[ -n "$NAME" ]]; then
 		AGENT_CMD+=(resume "$NAME")
 	fi
+elif [[ "$AGENT" == "gemini" ]]; then
+	AGENT_CMD=(gemini -y)
+	if [[ -n "$NAME" ]]; then
+		AGENT_CMD+=(-r "$NAME")
+	fi
 elif [[ "$AGENT" == "claude" ]]; then
 	AGENT_CMD=(claude --dangerously-skip-permissions --resume)
 	if [[ -n "$NAME" ]]; then
@@ -114,6 +119,7 @@ BWRAP_ARGS=(
 	--bind "$HOME/.rustup" "$HOME/.rustup"
 	--bind "$HOME/.cache" "$HOME/.cache"
 	--bind "$HOME/.codex" "$HOME/.codex"
+	--bind "$HOME/.gemini" "$HOME/.gemini"
 	--bind "$HOME/.docker" "$HOME/.docker"
 	--bind "/tmp/.X11-unix" "/tmp/.X11-unix"
 	--bind "/tmp/.ICE-unix" "/tmp/.ICE-unix"
