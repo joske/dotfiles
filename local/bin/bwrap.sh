@@ -95,9 +95,11 @@ BWRAP_ARGS=(
 	--dir /tmp
 	--dir /var
 	--ro-bind /opt /opt
+	--ro-bind /sys /sys
 	--proc /proc
 	--dev /dev
 	--bind /dev/kvm /dev/kvm
+	--bind /dev/dri /dev/dri
 	--tmpfs /run
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
@@ -117,8 +119,11 @@ BWRAP_ARGS=(
 	--bind "/tmp/.ICE-unix" "/tmp/.ICE-unix"
 	--bind "/tmp/.font-unix" "/tmp/.font-unix"
 	--bind "/tmp/.XIM-unix" "/tmp/.XIM-unix"
-	--bind /var/run/docker.sock /var/run/docker.sock
 )
+
+if [ -e /var/run/docker.sock ]; then
+	BWRAP_ARGS+=(--bind /var/run/docker.sock /var/run/docker.sock)
+fi
 
 for p in "${PATHS[@]}"; do
 	BWRAP_ARGS+=(--bind "$p" "$p")
