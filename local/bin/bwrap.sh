@@ -65,6 +65,11 @@ elif [[ "$AGENT" == "gemini" ]]; then
 	if [[ -n "$NAME" ]]; then
 		AGENT_CMD+=(-r "$NAME")
 	fi
+elif [[ "$AGENT" == "opencode" ]]; then
+	AGENT_CMD=(opencode)
+	if [[ -n "$NAME" ]]; then
+		AGENT_CMD+=(-s "$NAME")
+	fi
 elif [[ "$AGENT" == "claude" ]]; then
 	AGENT_CMD=(claude --dangerously-skip-permissions --resume)
 	if [[ -n "$NAME" ]]; then
@@ -112,6 +117,8 @@ BWRAP_ARGS=(
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
+	--bind "$HOME/.local/share/claude" "$HOME/.local/share/claude"
+	--ro-bind "$HOME/.local/bin/claude" "$HOME/.local/bin/claude"
 	--bind "$HOME/.local/state/claude" "$HOME/.local/state/claude"
 	--bind "$HOME/.npm" "$HOME/.npm"
 	--bind "$HOME/.e16" "$HOME/.e16"
@@ -119,6 +126,9 @@ BWRAP_ARGS=(
 	--bind "$HOME/.rustup" "$HOME/.rustup"
 	--bind "$HOME/.cache" "$HOME/.cache"
 	--bind "$HOME/.codex" "$HOME/.codex"
+	--bind "$HOME/.config/opencode/" "$HOME/.config/opencode/"
+	--bind "$HOME/.local/share/opencode/" "$HOME/.local/share/opencode/"
+	--bind "$HOME/.local/state/opencode/" "$HOME/.local/state/opencode/"
 	--bind "$HOME/.gemini" "$HOME/.gemini"
 	--bind "$HOME/.docker" "$HOME/.docker"
 	--bind "/tmp/.X11-unix" "/tmp/.X11-unix"
