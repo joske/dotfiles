@@ -117,9 +117,6 @@ BWRAP_ARGS=(
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
-	--bind "$HOME/.local/share/claude" "$HOME/.local/share/claude"
-	--ro-bind "$HOME/.local/bin/claude" "$HOME/.local/bin/claude"
-	--bind "$HOME/.local/state/claude" "$HOME/.local/state/claude"
 	--bind "$HOME/.npm" "$HOME/.npm"
 	--bind "$HOME/.e16" "$HOME/.e16"
 	--bind "$HOME/.cargo" "$HOME/.cargo"
@@ -139,6 +136,18 @@ BWRAP_ARGS=(
 
 if [ -e /var/run/docker.sock ]; then
 	BWRAP_ARGS+=(--bind /var/run/docker.sock /var/run/docker.sock)
+fi
+
+if [ -e "$HOME/.local/share/claude" ]; then
+	BWRAP_ARGS+=(--bind "$HOME/.local/share/claude" "$HOME/.local/share/claude")
+fi
+
+if [ -e "$HOME/.local/state/claude" ]; then
+	BWRAP_ARGS+=(--bind "$HOME/.local/state/claude" "$HOME/.local/state/claude")
+fi
+
+if [ -e "$HOME/.local/bin/claude" ]; then
+	BWRAP_ARGS+=(--ro-bind "$HOME/.local/bin/claude" "$HOME/.local/bin/claude")
 fi
 
 for p in "${PATHS[@]}"; do
