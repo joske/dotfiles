@@ -114,6 +114,7 @@ BWRAP_ARGS=(
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
 	--ro-bind "$HOME" "$HOME/realhome"
+	--ro-bind "$HOME/.ssh" "$HOME/.ssh"
 	--ro-bind "$HOME/Projects/dotfiles/" "$HOME/Projects/dotfiles/"
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
