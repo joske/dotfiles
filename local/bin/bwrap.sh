@@ -56,7 +56,7 @@ fi
 if [[ "$DEBUG" -eq 1 ]]; then
 	AGENT_CMD=(bash)
 elif [[ "$AGENT" == "codex" ]]; then
-	AGENT_CMD=(codex -a never)
+	AGENT_CMD=(codex -a never -s danger-full-access)
 	if [[ -n "$NAME" ]]; then
 		AGENT_CMD+=(resume "$NAME")
 	fi
@@ -114,6 +114,7 @@ BWRAP_ARGS=(
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
 	--ro-bind "$HOME" "$HOME/realhome"
+	--ro-bind "$HOME/Projects/dotfiles/" "$HOME/Projects/dotfiles/"
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
