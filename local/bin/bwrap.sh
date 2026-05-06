@@ -130,6 +130,7 @@ BWRAP_ARGS=(
 	--bind "$HOME/.local/state/opencode/" "$HOME/.local/state/opencode/"
 	--bind "$HOME/.gemini" "$HOME/.gemini"
 	--bind "$HOME/.docker" "$HOME/.docker"
+	--bind "$HOME/.Xauthority" "$HOME/.Xauthority"
 	--bind "/tmp/.X11-unix" "/tmp/.X11-unix"
 	--bind "/tmp/.ICE-unix" "/tmp/.ICE-unix"
 	--bind "/tmp/.font-unix" "/tmp/.font-unix"
