@@ -109,7 +109,7 @@ BWRAP_ARGS=(
 	--proc /proc
 	--dev /dev
 	--bind /dev/kvm /dev/kvm
-	--bind /dev/dri /dev/dri
+	--dev-bind /dev/dri /dev/dri
 	--tmpfs /run
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
