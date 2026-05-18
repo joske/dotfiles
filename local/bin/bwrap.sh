@@ -57,22 +57,22 @@ if [[ "$DEBUG" -eq 1 ]]; then
 	AGENT_CMD=(bash)
 elif [[ "$AGENT" == "codex" ]]; then
 	AGENT_CMD=(codex -a never -s danger-full-access)
-	if [[ -n "$NAME" ]]; then
+	if [[ ! -z "$NAME" ]]; then
 		AGENT_CMD+=(resume "$NAME")
 	fi
 elif [[ "$AGENT" == "gemini" ]]; then
 	AGENT_CMD=(gemini -y)
-	if [[ -n "$NAME" ]]; then
+	if [[ ! -z "$NAME" ]]; then
 		AGENT_CMD+=(-r "$NAME")
 	fi
 elif [[ "$AGENT" == "opencode" ]]; then
 	AGENT_CMD=(opencode)
-	if [[ -n "$NAME" ]]; then
+	if [[ ! -z "$NAME" ]]; then
 		AGENT_CMD+=(-s "$NAME")
 	fi
 elif [[ "$AGENT" == "claude" ]]; then
-	AGENT_CMD=(claude --dangerously-skip-permissions --resume)
-	if [[ -n "$NAME" ]]; then
+	AGENT_CMD=(claude --dangerously-skip-permissions)
+	if [[ ! -z "$NAME" ]]; then
 		AGENT_CMD+=(--resume "$NAME")
 	fi
 else
@@ -108,7 +108,6 @@ BWRAP_ARGS=(
 	--ro-bind /sys /sys
 	--proc /proc
 	--dev /dev
-	--bind /dev/kvm /dev/kvm
 	--dev-bind /dev/dri /dev/dri
 	--tmpfs /run
 	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
@@ -120,35 +119,35 @@ BWRAP_ARGS=(
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
-	--bind "$HOME/.npm" "$HOME/.npm"
-	--bind "$HOME/.e16" "$HOME/.e16"
 	--bind "$HOME/.cargo" "$HOME/.cargo"
 	--bind "$HOME/.rustup" "$HOME/.rustup"
 	--bind "$HOME/.cache" "$HOME/.cache"
-	--bind "$HOME/.codex" "$HOME/.codex"
-	--bind "$HOME/.config/opencode/" "$HOME/.config/opencode/"
-	--bind "$HOME/.local/share/opencode/" "$HOME/.local/share/opencode/"
-	--bind "$HOME/.local/state/opencode/" "$HOME/.local/state/opencode/"
-	--bind "$HOME/.gemini" "$HOME/.gemini"
-	--bind "$HOME/.docker" "$HOME/.docker"
-	--bind "$HOME/.Xauthority" "$HOME/.Xauthority"
 	--bind "/tmp/.X11-unix" "/tmp/.X11-unix"
 	--bind "/tmp/.ICE-unix" "/tmp/.ICE-unix"
 	--bind "/tmp/.font-unix" "/tmp/.font-unix"
 	--bind "/tmp/.XIM-unix" "/tmp/.XIM-unix"
 )
 
-if [ -e /var/run/docker.sock ]; then
-	BWRAP_ARGS+=(--bind /var/run/docker.sock /var/run/docker.sock)
-fi
+function maybe_bind() {
+	NAME=$1
+	if [ -e "$NAME" ]; then
+		BWRAP_ARGS+=(--bind "$NAME" "$NAME")
+	fi
+}
 
-if [ -e "$HOME/.local/share/claude" ]; then
-	BWRAP_ARGS+=(--bind "$HOME/.local/share/claude" "$HOME/.local/share/claude")
-fi
-
-if [ -e "$HOME/.local/state/claude" ]; then
-	BWRAP_ARGS+=(--bind "$HOME/.local/state/claude" "$HOME/.local/state/claude")
-fi
+maybe_bind "/dev/kvm"
+maybe_bind "$HOME/.codex"
+maybe_bind "$HOME/.e16"
+maybe_bind "$HOME/.npm"
+maybe_bind "$HOME/.Xauthority"
+maybe_bind "$HOME/.docker"
+maybe_bind "$HOME/.gemini"
+maybe_bind "/var/run/docker.sock"
+maybe_bind "$HOME/.local/share/claude"
+maybe_bind "$HOME/.local/state/claude"
+maybe_bind "$HOME/.config/opencode"
+maybe_bind "$HOME/.local/share/opencode"
+maybe_bind "$HOME/.local/state/opencode"
 
 if [ -e "$HOME/.local/bin/claude" ]; then
 	BWRAP_ARGS+=(--ro-bind "$HOME/.local/bin/claude" "$HOME/.local/bin/claude")
@@ -160,10 +159,10 @@ done
 
 BWRAP_ARGS+=(--chdir "${PATHS[0]}")
 
-if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
-	BWRAP_ARGS+=(--ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
-	BWRAP_ARGS+=(--setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK")
-fi
+# if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
+# 	BWRAP_ARGS+=(--ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
+# 	BWRAP_ARGS+=(--setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK")
+# fi
 
 BWRAP_ARGS+=(--die-with-parent -- "${AGENT_CMD[@]}")
 
