@@ -110,22 +110,11 @@ BWRAP_ARGS=(
 	--dev /dev
 	--dev-bind /dev/dri /dev/dri
 	--tmpfs /run
-	--bind "/run/user/$(id -u)" "/run/user/$(id -u)"
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
 	--ro-bind "$HOME" "$HOME/realhome"
-	--ro-bind "$HOME/.ssh" "$HOME/.ssh"
-	--ro-bind "$HOME/.gitconfig" "$HOME/.gitconfig"
-	--ro-bind "$HOME/Projects/dotfiles/" "$HOME/Projects/dotfiles/"
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
-	--bind "$HOME/.cargo" "$HOME/.cargo"
-	--bind "$HOME/.rustup" "$HOME/.rustup"
-	--bind "$HOME/.cache" "$HOME/.cache"
-	--bind "/tmp/.X11-unix" "/tmp/.X11-unix"
-	--bind "/tmp/.ICE-unix" "/tmp/.ICE-unix"
-	--bind "/tmp/.font-unix" "/tmp/.font-unix"
-	--bind "/tmp/.XIM-unix" "/tmp/.XIM-unix"
 )
 
 function maybe_bind() {
@@ -135,10 +124,28 @@ function maybe_bind() {
 	fi
 }
 
+function maybe_ro_bind() {
+	NAME=$1
+	if [ -e "$NAME" ]; then
+		BWRAP_ARGS+=(--ro-bind "$NAME" "$NAME")
+	fi
+}
+
+maybe_ro_bind "/run/systemd/resolve"
+maybe_ro_bind "$HOME/.ssh"
+maybe_ro_bind "$HOME/.gitconfig"
+maybe_ro_bind "$HOME/Projects/dotfiles"
+maybe_ro_bind "$HOME/Projects/dotfiles"
+maybe_ro_bind "$HOME/.local/bin/claude"
+
 maybe_bind "/dev/kvm"
+maybe_bind "/run/user/$(id -u)"
 maybe_bind "$HOME/.codex"
 maybe_bind "$HOME/.e16"
 maybe_bind "$HOME/.npm"
+maybe_bind "$HOME/.cargo"
+maybe_bind "$HOME/.rustup"
+maybe_bind "$HOME/.cache"
 maybe_bind "$HOME/.Xauthority"
 maybe_bind "$HOME/.docker"
 maybe_bind "$HOME/.gemini"
@@ -148,11 +155,10 @@ maybe_bind "$HOME/.local/state/claude"
 maybe_bind "$HOME/.config/opencode"
 maybe_bind "$HOME/.local/share/opencode"
 maybe_bind "$HOME/.local/state/opencode"
-maybe_bind "/run/systemd/resolve"
-
-if [ -e "$HOME/.local/bin/claude" ]; then
-	BWRAP_ARGS+=(--ro-bind "$HOME/.local/bin/claude" "$HOME/.local/bin/claude")
-fi
+maybe_bind "/tmp/.X11-unix"
+maybe_bind "/tmp/.XIM-unix"
+maybe_bind "/tmp/.ICE-unix"
+maybe_bind "/tmp/.font-unix"
 
 for p in "${PATHS[@]}"; do
 	BWRAP_ARGS+=(--bind "$p" "$p")
