@@ -148,6 +148,7 @@ maybe_bind "$HOME/.local/state/claude"
 maybe_bind "$HOME/.config/opencode"
 maybe_bind "$HOME/.local/share/opencode"
 maybe_bind "$HOME/.local/state/opencode"
+maybe_bind "/run/systemd/resolve"
 
 if [ -e "$HOME/.local/bin/claude" ]; then
 	BWRAP_ARGS+=(--ro-bind "$HOME/.local/bin/claude" "$HOME/.local/bin/claude")
