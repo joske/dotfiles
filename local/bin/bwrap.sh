@@ -115,6 +115,7 @@ BWRAP_ARGS=(
 	--dir "$HOME"
 	--bind "$HOME/.claude" "$HOME/.claude"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
+	--setenv GIT_SSH_COMMAND "ssh -F /dev/null"
 )
 
 function maybe_bind() {
@@ -133,6 +134,7 @@ function maybe_ro_bind() {
 
 maybe_ro_bind "/run/systemd/resolve"
 maybe_ro_bind "$HOME/.ssh"
+maybe_ro_bind "$HOME/.config/gh"
 maybe_ro_bind "$HOME/.gitconfig"
 maybe_ro_bind "$HOME/Projects/dotfiles"
 maybe_ro_bind "$HOME/Projects/dotfiles"
