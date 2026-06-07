@@ -161,6 +161,7 @@ maybe_bind "/tmp/.X11-unix"
 maybe_bind "/tmp/.XIM-unix"
 maybe_bind "/tmp/.ICE-unix"
 maybe_bind "/tmp/.font-unix"
+maybe_bind "/tmp/tmux-$(id -u)"
 
 for p in "${PATHS[@]}"; do
 	BWRAP_ARGS+=(--bind "$p" "$p")
