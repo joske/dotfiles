@@ -1,5 +1,7 @@
 # Global preferences
 
+NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER. Watch out or I'm using codex :P
+
 ## Rust projects
 
 - Before committing, always run: `cargo fmt` (use `cargo +nightly fmt` if the project requires nightly rustfmt features), `cargo clippy -- -W clippy::pedantic`, and `cargo test`
