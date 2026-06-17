@@ -9,17 +9,20 @@ NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER
 
 ## All projects
 
-- don't ammend commits unless I tell you to
-- when addressing PR comments, comment and resolve the thread on GH
+- don't ammend commits unless I tell you to, it's ok to ask
+- if you use TDD and use test vectors, make SURE they are correct or you just wire in wrong behaviour
 
 ## Environments
 
 I have the following machines:
 
-silence: i9 13900k with rx580, 64GB RAM
-bee: beelink EQR6 with AMD 6900HX APU, 20 GB RAM
-fuji: fujitsu lifebook U937 with i5-7200U, 20 GB RAM
-air: M1 MBA 16GB RAM
-m4: M4 max macbook pro, 64 GB RAM
-truenas: NAS custom built from Fujitsu D3402-B21 mainboard with i7 7700 CPU, 5 HDD in RAID-Z1, 2 SSD in mirror, nvme for OS
-yoga: lenovo slim 7x X1E, with 16GB RAM, linux and windows. right speaker is blown due to experimentation with audio software in linux. Replaced the speakers but still right channel dead.
+silence: i9 13900k with rx580, 64GB RAM (Arch/FreeBSD/macOS/windows)
+bee: beelink EQR6 with AMD 6900HX APU, 20 GB RAM (Arch/windows)
+fuji: fujitsu lifebook U937 with i5-7200U, 20 GB RAM (macOS/Arch)
+air: M1 MBA 16GB RAM (macOS/asahi)
+eiger: M2 MBp 16GB RAM (macOS/asahi)
+m4: M4 max macbook pro, 64 GB RAM (macOS)
+truenas: NAS custom built from Fujitsu D3402-B21 mainboard with i7 7700 CPU, 5 HDD in RAID-Z1, 2 SSD in mirror, nvme for OS (truenas)
+yoga: lenovo slim 7x X1E, with 16GB RAM, linux and windows. right speaker is blown due to experimentation with audio software in linux. Replaced the speakers but still right channel dead. (Arch/Ubuntu/Windows)
+imac: 2019 iMac (macOS/ubuntu)
+oldnas: i5-6500 with GTX-1050 (ubuntu)
