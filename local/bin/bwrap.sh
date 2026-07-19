@@ -5,7 +5,7 @@ set -euo pipefail
 usage() {
 	echo "Usage: $0 [-d] [-s session-name] [-a agent] <path> [path...]"
 	echo "  First path must be a directory (used as working directory)."
-	echo "  -a agent: 'claude' (default) or 'codex'"
+	echo "  -a agent: 'claude' (default) or 'codex', 'opencode', 'omp', 'gemini'"
 	echo "  -d: run bash instead of the selected agent for debugging"
 	exit 1
 }
@@ -69,6 +69,11 @@ elif [[ "$AGENT" == "opencode" ]]; then
 	AGENT_CMD=(opencode)
 	if [[ ! -z "$NAME" ]]; then
 		AGENT_CMD+=(-s "$NAME")
+	fi
+elif [[ "$AGENT" == "omp" ]]; then
+	AGENT_CMD=(omp)
+	if [[ ! -z "$NAME" ]]; then
+		AGENT_CMD+=(--resume="$NAME")
 	fi
 elif [[ "$AGENT" == "claude" ]]; then
 	AGENT_CMD=(claude --dangerously-skip-permissions)
