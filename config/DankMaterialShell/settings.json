@@ -33,7 +33,7 @@
   "showWeekNumber": false,
   "calendarBackend": "auto",
   "clockFormat": "auto",
-  "showSeconds": false,
+  "showSeconds": true,
   "padHours12Hour": false,
   "useFahrenheit": false,
   "windSpeedUnit": "kmh",
@@ -268,8 +268,10 @@
   "greeterFontFamily": "",
   "greeterWallpaperFillMode": "",
   "greeterPamExternallyManaged": false,
-  "greeterSyncPending": false,
-  "greeterSyncBaseline": {},
+  "greeterSyncPending": true,
+  "greeterSyncBaseline": {
+    "showSeconds": false
+  },
   "mediaSize": 1,
   "appLauncherViewMode": "list",
   "spotlightModalViewMode": "list",
