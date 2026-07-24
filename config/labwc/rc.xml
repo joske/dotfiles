@@ -50,6 +50,11 @@
     <keybind key="W-e"><action name="Execute" command="xdg-open /home/jos" /></keybind>
     <keybind key="W-t"><action name="Execute" command="wezterm" /></keybind>
   </keyboard>
+  <libinput>
+    <device category="default">
+      <naturalScroll>no</naturalScroll>
+    </device>
+  </libinput>
   <mouse>
     <default />
     <context name="Root">
