@@ -1,0 +1,10 @@
+{
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "attribution": {
+    "sessionUrl": false
+  },
+  "theme": "dark"
+}
