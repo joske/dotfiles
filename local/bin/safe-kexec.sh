@@ -3,36 +3,36 @@
 set -euo pipefail
 
 ### CONFIGURATION ###
-KERNEL_IMG="/boot/vmlinuz-linux-zen"
-INITRD_IMG="/boot/initramfs-linux-zen.img"
+KERNEL_IMG="/boot/vmlinuz-linux-cachyos"
+INITRD_IMG="/boot/initramfs-linux-cachyos.img"
 CMDLINE=$(cat /proc/cmdline)
 DISPLAY_MANAGER="gdm"
 LOGFILE="/var/log/kexec.log"
 
 if [[ "$(uname -s)" != "Linux" ]]; then
-  echo "This script only works on Linux systems."
-  exit 1
+	echo "This script only works on Linux systems."
+	exit 1
 fi
 
 if fgconsole >/dev/null 2>&1; then
-  echo "Running on a virtual terminal (VT$(fgconsole))"
+	echo "Running on a virtual terminal (VT$(fgconsole))"
 else
-  echo "Not running on a virtual terminal!"
-  exit 1
+	echo "Not running on a virtual terminal!"
+	exit 1
 fi
 
 [[ -f "$KERNEL_IMG" ]] || {
-  echo "Kernel image not found!"
-  exit 1
+	echo "Kernel image not found!"
+	exit 1
 }
 [[ -f "$INITRD_IMG" ]] || {
-  echo "Initrd image not found!"
-  exit 1
+	echo "Initrd image not found!"
+	exit 1
 }
 
 if [[ $EUID -ne 0 ]]; then
-  echo "This script must be run as root."
-  exit 1
+	echo "This script must be run as root."
+	exit 1
 fi
 
 echo "=== [safe-kexec] ===" | tee "$LOGFILE"
