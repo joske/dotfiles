@@ -101,16 +101,11 @@ if [[ ! -L "$HOME/.claude.json" ]]; then
 fi
 
 BWRAP_ARGS=(
-	--ro-bind /boot /boot
 	--ro-bind /usr /usr
 	--symlink usr/bin /bin
 	--symlink usr/lib /lib
 	--symlink usr/lib64 /lib64
-	--ro-bind /etc /etc
 	--dir /tmp
-	--dir /var
-	--ro-bind /opt /opt
-	--ro-bind /sys /sys
 	--proc /proc
 	--dev /dev
 	--dev-bind /dev/dri /dev/dri
@@ -135,6 +130,12 @@ function maybe_ro_bind() {
 		BWRAP_ARGS+=(--ro-bind "$NAME" "$NAME")
 	fi
 }
+
+maybe_ro_bind /boot
+maybe_ro_bind /etc
+maybe_ro_bind /opt
+maybe_ro_bind /sys
+maybe_ro_bind /var
 
 maybe_ro_bind "/run/systemd/resolve"
 maybe_ro_bind "$HOME/.ssh"
