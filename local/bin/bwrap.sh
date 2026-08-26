@@ -115,6 +115,7 @@ BWRAP_ARGS=(
 	--dir "$HOME"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
 	--setenv GIT_SSH_COMMAND "ssh -F /dev/null"
+	--setenv RUSTC_WRAPPER ""
 )
 
 function maybe_bind() {
@@ -144,6 +145,7 @@ maybe_ro_bind "$HOME/.gitconfig"
 maybe_ro_bind "$HOME/Projects/dotfiles"
 maybe_ro_bind "$HOME/Projects/dotfiles"
 maybe_ro_bind "$HOME/.local/bin/claude"
+maybe_ro_bind "$HOME/.risc0"
 
 maybe_bind "/dev/kvm"
 maybe_bind "/run/user/$(id -u)"
