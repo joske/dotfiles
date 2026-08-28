@@ -10,6 +10,8 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
+config.mux_enable_ssh_agent = false
+
 -- config.color_scheme = "AdventureTime"
 config.keys = {
     {
