@@ -111,7 +111,7 @@ BWRAP_ARGS=(
 	--dev-bind /dev/dri /dev/dri
 	--tmpfs /run
 	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
-	--ro-bind "$HOME" "$HOME/realhome"
+	--ro-bind "$HOME/Projects" "$HOME/Projects"
 	--dir "$HOME"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
 	--setenv GIT_SSH_COMMAND "ssh -F /dev/null"
@@ -139,7 +139,7 @@ maybe_ro_bind /sys
 maybe_ro_bind /var
 
 maybe_ro_bind "/run/systemd/resolve"
-maybe_ro_bind "$HOME/.ssh"
+maybe_ro_bind "$HOME/.ssh/id_ed25519.pub"
 maybe_ro_bind "$HOME/.config/gh"
 maybe_ro_bind "$HOME/.config/git/allowed_signers"
 maybe_ro_bind "$HOME/.gitconfig"
@@ -180,10 +180,10 @@ done
 
 BWRAP_ARGS+=(--chdir "${PATHS[0]}")
 
-# if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
-# 	BWRAP_ARGS+=(--ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
-# 	BWRAP_ARGS+=(--setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK")
-# fi
+if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
+	BWRAP_ARGS+=(--ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
+	BWRAP_ARGS+=(--setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK")
+fi
 
 BWRAP_ARGS+=(--die-with-parent -- "${AGENT_CMD[@]}")
 
