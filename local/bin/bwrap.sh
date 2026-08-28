@@ -141,6 +141,7 @@ maybe_ro_bind /var
 maybe_ro_bind "/run/systemd/resolve"
 maybe_ro_bind "$HOME/.ssh"
 maybe_ro_bind "$HOME/.config/gh"
+maybe_ro_bind "$HOME/.config/git/allowed_signers"
 maybe_ro_bind "$HOME/.gitconfig"
 maybe_ro_bind "$HOME/Projects/dotfiles"
 maybe_ro_bind "$HOME/Projects/dotfiles"
