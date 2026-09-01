@@ -1,6 +1,6 @@
 # Global preferences
 
-NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER. Watch out or I'm using codex :P
+NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER. Watch out or I'll switch to codex :P
 
 ## Rust projects
 
@@ -19,10 +19,11 @@ I have the following machines:
 silence: i9 13900k with rx580, 64GB RAM (Arch/FreeBSD/macOS/windows)
 bee: beelink EQR6 with AMD 6900HX APU, 20 GB RAM (Arch/windows)
 fuji: fujitsu lifebook U937 with i5-7200U, 20 GB RAM (macOS/Arch)
-air: M1 MBA 16GB RAM (macOS/asahi)
-eiger: M2 MBp 16GB RAM (macOS/asahi)
+air: M1 MBA 16GB RAM (macOS/asahi alarm)
+eiger: M2 MBp 16GB RAM (macOS/asahi alarm)
 m4: M4 max macbook pro, 64 GB RAM (macOS)
 truenas: NAS custom built from Fujitsu D3402-B21 mainboard with i7 7700 CPU, 5 HDD in RAID-Z1, 2 SSD in mirror, nvme for OS (truenas)
 yoga: lenovo slim 7x X1E, with 16GB RAM, linux and windows. right speaker is blown due to experimentation with audio software in linux. Replaced the speakers but still right channel dead. (Arch/Ubuntu/Windows)
 imac: 2019 iMac (macOS/ubuntu)
-oldnas: i5-6500 with GTX-1050 (ubuntu)
+oldnas: i5-6500 with GTX-1050 (Arch)
+z400: HP z400 workstation with Xeon X5687 and RX 460, 20GB RAM (Arch)
