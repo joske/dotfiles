@@ -1,12 +1,12 @@
 {
-    "attribution": {
-        "sessionUrl": false
-    },
-    "model": "opus[1m]",
-    "enabledPlugins": {
-        "rust-analyzer-lsp@claude-plugins-official": true
-    },
-    "theme": "dark",
-    "agentPushNotifEnabled": true,
-    "skipDangerousModePermissionPrompt": false
+  "attribution": {
+    "sessionUrl": false
+  },
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "skipDangerousModePermissionPrompt": false,
+  "theme": "dark",
+  "agentPushNotifEnabled": true
 }
