@@ -36,7 +36,7 @@ if ! command -v yay >/dev/null; then
 	popd || true
 fi
 
-yay -S --needed --noconfirm rcm mergers ttf-ubuntu-mono-nerd
+yay -S --needed --noconfirm rcm mergers ttf-ubuntu-mono-nerd bitwarden wasistlos
 
 # dotfiles
 if [ ! -d "$HOME/Projects/dotfiles" ]; then
@@ -70,6 +70,8 @@ if [ -x /usr/bin/gnome-shell ]; then
 	dconf write /org/gnome/desktop/wm/preferences/focus-mode "'sloppy'"
 	dconf write /org/gnome/desktop/wm/preferences/auto-raise true
 	dconf write /org/gnome/desktop/peripherals/touchpad/natural-scroll false
+	dconf write /org/gnome/shell/favorite-apps "['org.gnome.Settings.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.wezfurlong.wezterm.desktop', 'com.github.xeco23.WasIstLos.desktop', 'bitwarden.desktop']"
+
 	EXTENSIONS=('dash-to-dock@micxgx.gmail.com' 'logomenu@aryan_k' 'apps-menu@gnome-shell-extensions.gcampax.github.com' 'caffeine@patapon.info'
 		'Vitals@CoreCoding.com' 'clipboard-indicator@tudmotu.com' 'places-menu@gnome-shell-extensions.gcampax.github.com' 'top-bar-organizer@julian.gse.jsts.xyz')
 	shell_version=$(gnome-shell --version | cut -d' ' -f3)
