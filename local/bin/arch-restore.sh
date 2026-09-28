@@ -2,19 +2,27 @@
 
 set -eu
 
+function has_gui() {
+	# inside a session already?
+	if [ -n "${WAYLAND_DISPLAY:-}" ]; then
+		return 0
+	fi
+	# otherwise: is there anything to log into?
+	ls /usr/share/wayland-sessions/*.desktop /usr/share/xsessions/*.desktop >/dev/null 2>&1
+}
+
 # base
 sudo sed -i '/^#Color/s/#Color/Color/' /etc/pacman.conf
 sudo pacman -Syu --noconfirm
-sudo pacman -S --needed --noconfirm fish fisher wezterm git base-devel ripgrep rustup lazygit tmux neovim ruby yarn npm btop \
+sudo pacman -S --needed --noconfirm fish fisher git base-devel ripgrep rustup lazygit tmux neovim ruby yarn npm btop \
 	ranger gdu cpio zip unzip tar gzip bzip2 xz curl wget bc jq tree fzf sccache net-tools man-db less imagemagick exfat-utils \
-	lnav docker docker-compose tree-sitter-cli wl-clipboard xclip xsel
-sudo pacman -S --needed --noconfirm firefox
+	lnav docker docker-compose tree-sitter-cli
 
 # uncomment below if you want to install latex (it downloads 750 MB and installs 2GB)
 # sudo pacman -S --needed --noconfirm texlive-latexextra texlive-fontsextra
 
 # rust
-pgrep sccache || sccache --start-server
+pgrep sccache >/dev/null || sccache --start-server
 rustup install nightly
 rustup default stable
 if [ -d "$HOME/.cargo" ]; then
@@ -36,30 +44,42 @@ if ! command -v yay >/dev/null; then
 	popd || true
 fi
 
-# AUR wasistlos is unmaintained and depends on webkit2gtk that no longer exists
-# patch to depend on webkit2gtk-4.1
-if [ ! -d "$HOME/.cache/yay/wasistlos" ]; then
-	pushd "$HOME/.cache/yay"
-	git clone https://aur.archlinux.org/wasistlos.git
-	pushd wasistlos
-	sed -i 's/webkit2gtk/webkit2gtk-4.1/' PKGBUILD
-	makepkg -siA --noconfirm
-	popd || true
-	popd || true
-fi
-
-yay -S --needed --noconfirm rcm mergers ttf-ubuntu-mono-nerd bitwarden
+yay -S --needed --noconfirm rcm
 
 # dotfiles
 if [ ! -d "$HOME/Projects/dotfiles" ]; then
 	pushd "$HOME/Projects/" || true
 	git clone https://github.com/joske/dotfiles
-	mkdir -p "$HOME/Pictures/"
 	popd || true
 fi
 rcup -f -x excl -d "$HOME/Projects/dotfiles"
 
-cp "$HOME/Projects/dotfiles/excl/catbackground.jpg" "$HOME/Pictures/"
+# GUI apps
+if has_gui; then
+	sudo pacman -S --needed --noconfirm firefox wezterm wl-clipboard xclip xsel seahorse ghex gimp transmission-gtk cups hplip foomatic-db-ppds
+	yay -S --needed --noconfirm mergers ttf-ubuntu-mono-nerd bitwarden shortwave
+
+	# x86_64 only packages
+	if [ "$(uname -m)" = "x86_64" ]; then
+		yay -S --needed --noconfirm spotify
+	fi
+
+	mkdir -p "$HOME/Pictures/"
+	cp "$HOME/Projects/dotfiles/excl/catbackground.jpg" "$HOME/Pictures/"
+
+	# AUR wasistlos is unmaintained and depends on webkit2gtk that no longer exists
+	# patch to depend on webkit2gtk-4.1
+	if [ ! -d "$HOME/.cache/yay/wasistlos" ]; then
+		pushd "$HOME/.cache/yay"
+		git clone https://aur.archlinux.org/wasistlos.git
+		pushd wasistlos
+		sed -i 's/webkit2gtk/webkit2gtk-4.1/' PKGBUILD
+		makepkg -siA --noconfirm
+		popd || true
+		popd || true
+	fi
+
+fi
 
 # gnome
 if [ -x /usr/bin/gsettings ] && [ -f "$HOME/Pictures/catbackground.jpg" ]; then
@@ -82,7 +102,7 @@ if [ -x /usr/bin/gnome-shell ]; then
 	dconf write /org/gnome/desktop/wm/preferences/focus-mode "'sloppy'"
 	dconf write /org/gnome/desktop/wm/preferences/auto-raise true
 	dconf write /org/gnome/desktop/peripherals/touchpad/natural-scroll false
-	dconf write /org/gnome/shell/favorite-apps "['org.gnome.Settings.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.wezfurlong.wezterm.desktop', 'com.github.xeco23.WasIstLos.desktop', 'bitwarden.desktop']"
+	dconf write /org/gnome/shell/favorite-apps "['org.gnome.Settings.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.wezfurlong.wezterm.desktop', 'com.github.xeco23.WasIstLos.desktop', 'de.haeckerfelix.Shortwave.desktop', 'bitwarden.desktop']"
 
 	EXTENSIONS=('dash-to-dock@micxgx.gmail.com' 'logomenu@aryan_k' 'apps-menu@gnome-shell-extensions.gcampax.github.com' 'caffeine@patapon.info'
 		'Vitals@CoreCoding.com' 'clipboard-indicator@tudmotu.com' 'places-menu@gnome-shell-extensions.gcampax.github.com' 'top-bar-organizer@julian.gse.jsts.xyz')
@@ -122,8 +142,8 @@ fish -c "fish_add_path $HOME/.local/bin" || true # idempotent
 if [ ! -d "$HOME/.config/fish/functions/tide/" ]; then
 	fish -c 'fisher install IlanCosman/tide@v6'
 	fish -c "tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Angled --powerline_prompt_heads=Sharp --powerline_prompt_tails=Flat --powerline_prompt_style='One line' --prompt_spacing=Compact --icons='Many icons' --transient=No"
-	echo "change default login shell to fish: you'll need to enter your PW"
 fi
+echo "change default login shell to fish: you may need to enter your PW"
 [ "$(getent passwd "$USER" | cut -d: -f7)" = "/usr/bin/fish" ] || chsh -s /usr/bin/fish
 
 # nvim
@@ -141,4 +161,6 @@ EOF
 fi
 
 # yserver
-sudo pacman -S --needed --noconfirm xorg-mkfontscale xorg-fonts-misc xterm wmctrl xdotool just gcc libxshmfence libxkbcommon libinput shaderc systemd-libs fontconfig pkgconf mesa scdoc
+if has_gui; then
+	sudo pacman -S --needed --noconfirm xorg-mkfontscale xorg-fonts-misc xterm wmctrl xdotool just gcc libxshmfence libxkbcommon libinput shaderc systemd-libs fontconfig pkgconf mesa scdoc
+fi
