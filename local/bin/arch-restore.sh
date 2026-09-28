@@ -16,8 +16,8 @@ echo "=> installing base packages"
 sudo sed -i '/^#Color/s/#Color/Color/' /etc/pacman.conf
 sudo pacman -Syu --noconfirm
 sudo pacman -S --needed --noconfirm fish fisher git base-devel ripgrep rustup lazygit tmux neovim ruby yarn npm btop \
-	ranger gdu cpio zip unzip tar gzip bzip2 xz curl wget bc jq tree fzf sccache net-tools man-db less imagemagick exfat-utils \
-	lnav docker docker-compose tree-sitter-cli
+	ranger gdu cpio unrar zip unzip tar gzip bzip2 xz curl wget bc jq tree fzf sccache net-tools man-db less imagemagick exfat-utils \
+	lnav docker docker-compose tree-sitter-cli difftastic ntfsprogs
 
 # uncomment below if you want to install latex (it downloads 750 MB and installs 2GB)
 # sudo pacman -S --needed --noconfirm texlive-latexextra texlive-fontsextra
@@ -62,7 +62,7 @@ rcup -f -x excl -d "$HOME/Projects/dotfiles"
 echo "=> installing GUI apps"
 if has_gui; then
 	sudo pacman -S --needed --noconfirm firefox wezterm wl-clipboard xclip xsel seahorse ghex gimp transmission-gtk cups hplip foomatic-db-ppds
-	yay -S --needed --noconfirm mergers ttf-ubuntu-mono-nerd bitwarden shortwave
+	yay -S --needed --noconfirm mergers ttf-ubuntu-mono-nerd bitwarden shortwave hplip-plugin
 
 	# x86_64 only packages
 	if [ "$(uname -m)" = "x86_64" ]; then
