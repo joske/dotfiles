@@ -12,6 +12,7 @@ function has_gui() {
 }
 
 # base
+echo "=> installing base packages"
 sudo sed -i '/^#Color/s/#Color/Color/' /etc/pacman.conf
 sudo pacman -Syu --noconfirm
 sudo pacman -S --needed --noconfirm fish fisher git base-devel ripgrep rustup lazygit tmux neovim ruby yarn npm btop \
@@ -22,6 +23,7 @@ sudo pacman -S --needed --noconfirm fish fisher git base-devel ripgrep rustup la
 # sudo pacman -S --needed --noconfirm texlive-latexextra texlive-fontsextra
 
 # rust
+echo "=> installing rust"
 pgrep sccache >/dev/null || sccache --start-server
 rustup install nightly
 rustup default stable
@@ -33,6 +35,7 @@ EOF
 fi
 
 # AUR
+echo "=> installing yay"
 if ! command -v yay >/dev/null; then
 	mkdir -p "$HOME/Projects"
 	pushd "$HOME/Projects" || true
@@ -47,6 +50,7 @@ fi
 yay -S --needed --noconfirm rcm
 
 # dotfiles
+echo "=> installing dotfiles"
 if [ ! -d "$HOME/Projects/dotfiles" ]; then
 	pushd "$HOME/Projects/" || true
 	git clone https://github.com/joske/dotfiles
@@ -55,6 +59,7 @@ fi
 rcup -f -x excl -d "$HOME/Projects/dotfiles"
 
 # GUI apps
+echo "=> installing GUI apps"
 if has_gui; then
 	sudo pacman -S --needed --noconfirm firefox wezterm wl-clipboard xclip xsel seahorse ghex gimp transmission-gtk cups hplip foomatic-db-ppds
 	yay -S --needed --noconfirm mergers ttf-ubuntu-mono-nerd bitwarden shortwave
@@ -87,6 +92,7 @@ if [ -x /usr/bin/gsettings ] && [ -f "$HOME/Pictures/catbackground.jpg" ]; then
 	gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/Pictures/catbackground.jpg" || true
 fi
 if [ -x /usr/bin/gnome-shell ]; then
+	echo "=> configuring GNOME"
 	sudo pacman -S --needed --noconfirm extension-manager dconf-editor
 	dconf write /org/gnome/desktop/interface/accent-color "'blue'"
 	dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
@@ -112,7 +118,7 @@ if [ -x /usr/bin/gnome-shell ]; then
 		if [ ! -d "$HOME/.local/share/gnome-shell/extensions/$uuid" ]; then
 			info_json=$(curl -sS "https://extensions.gnome.org/extension-info/?uuid=$uuid&shell_version=$shell_version")
 
-			download_url=$(echo "$info_json" | jq ".download_url" --raw-output)
+			download_url=$(echo "=> $info_json" | jq ".download_url" --raw-output)
 
 			gnome-extensions install "https://extensions.gnome.org$download_url"
 		fi
@@ -136,6 +142,7 @@ if [ -x /usr/bin/gnome-shell ]; then
 fi
 
 # fish
+echo "=> configuring fish"
 fish -c "alias -s lg lazygit"
 fish -c "alias -s vim nvim"
 fish -c "fish_add_path $HOME/.local/bin" || true # idempotent
@@ -143,16 +150,19 @@ if [ ! -d "$HOME/.config/fish/functions/tide/" ]; then
 	fish -c 'fisher install IlanCosman/tide@v6'
 	fish -c "tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Angled --powerline_prompt_heads=Sharp --powerline_prompt_tails=Flat --powerline_prompt_style='One line' --prompt_spacing=Compact --icons='Many icons' --transient=No"
 fi
-echo "change default login shell to fish: you may need to enter your PW"
+echo "=> change default login shell to fish: you may need to enter your PW"
 [ "$(getent passwd "$USER" | cut -d: -f7)" = "/usr/bin/fish" ] || chsh -s /usr/bin/fish
+echo "=> shell changed"
 
 # nvim
+echo "=> installing nvim-native"
 if [ ! -d "$HOME/.config/nvim" ]; then
 	git clone https://github.com/joske/nvim-native "$HOME/.config/nvim"
 	nvim --headless +qa
 fi
 
 # sysctl
+echo "=> enabling sysrq"
 if [ ! -f /etc/sysctl.d/99-sysrq.conf ]; then
 	sudo tee /etc/sysctl.d/99-sysrq.conf <<EOF
 kernel.sysrq = 1
@@ -162,5 +172,8 @@ fi
 
 # yserver
 if has_gui; then
+	echo "=> installing yserver deps"
 	sudo pacman -S --needed --noconfirm xorg-mkfontscale xorg-fonts-misc xterm wmctrl xdotool just gcc libxshmfence libxkbcommon libinput shaderc systemd-libs fontconfig pkgconf mesa scdoc
 fi
+
+echo "=> done"
