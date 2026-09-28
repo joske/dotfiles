@@ -130,6 +130,7 @@ if [ -x /usr/bin/gnome-shell ]; then
 	dconf write /org/gnome/shell/extensions/Logo-menu/show-power-options true
 	dconf write /org/gnome/shell/extensions/Logo-menu/show-lockscreen true
 	dconf write /org/gnome/shell/extensions/Logo-menu/show-activities-button false
+	dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon false
 	dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 5
 	dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-terminal "'wezterm'"
 	dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-extensions-app "'com.mattjakeman.ExtensionManager.desktop'"
