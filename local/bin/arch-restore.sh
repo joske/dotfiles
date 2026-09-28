@@ -36,7 +36,19 @@ if ! command -v yay >/dev/null; then
 	popd || true
 fi
 
-yay -S --needed --noconfirm rcm mergers ttf-ubuntu-mono-nerd bitwarden wasistlos
+# AUR wasistlos is unmaintained and depends on webkit2gtk that no longer exists
+# patch to depend on webkit2gtk-4.1
+if [ ! -d "$HOME/.cache/yay/wasistlos" ]; then
+	pushd "$HOME/.cache/yay"
+	git clone https://aur.archlinux.org/wasistlos.git
+	pushd wasistlos
+	sed -i 's/webkit2gtk/webkit2gtk-4.1/' PKGBUILD
+	makepkg -siA --noconfirm
+	popd || true
+	popd || true
+fi
+
+yay -S --needed --noconfirm rcm mergers ttf-ubuntu-mono-nerd bitwarden
 
 # dotfiles
 if [ ! -d "$HOME/Projects/dotfiles" ]; then
