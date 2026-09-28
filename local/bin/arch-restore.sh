@@ -10,6 +10,9 @@ sudo pacman -S --needed --noconfirm fish fisher wezterm git base-devel ripgrep r
 	lnav docker docker-compose tree-sitter-cli wl-clipboard xclip xsel
 sudo pacman -S --needed --noconfirm firefox
 
+# uncomment below if you want to install latex (it downloads 750 MB and installs 2GB)
+# sudo pacman -S --needed --noconfirm texlive-latexextra texlive-fontsextra
+
 # rust
 pgrep sccache || sccache --start-server
 rustup install nightly
