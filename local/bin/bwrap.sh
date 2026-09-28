@@ -144,8 +144,6 @@ maybe_ro_bind "$HOME/.ssh/known_hosts"
 maybe_ro_bind "$HOME/.config/gh"
 maybe_ro_bind "$HOME/.config/git/allowed_signers"
 maybe_ro_bind "$HOME/.gitconfig"
-maybe_ro_bind "$HOME/Projects/dotfiles" # needed because of the symlinks
-maybe_ro_bind "$HOME/.local/bin/claude"
 maybe_ro_bind "$HOME/.risc0"
 
 maybe_bind "/dev/kvm"
@@ -159,6 +157,8 @@ maybe_bind "$HOME/.cache"
 maybe_bind "$HOME/.Xauthority"
 maybe_bind "$HOME/.gemini"
 maybe_bind "$HOME/.claude"
+maybe_bind "$HOME/Projects/dotfiles/claude/" # the above is a symlink to this
+maybe_bind "$HOME/.local/bin/claude"
 maybe_bind "$HOME/.local/share/claude"
 maybe_bind "$HOME/.local/state/claude"
 maybe_bind "$HOME/.omp"
