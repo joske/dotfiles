@@ -10,16 +10,18 @@ usage() {
 	exit 1
 }
 
-NAME=""
+SESSION_NAME=""
 AGENT="claude"
 DEBUG=0
+
+# ARGS parsing
 while true; do
 	if [[ "${1:-}" == "-d" ]]; then
 		DEBUG=1
 		shift
 	elif [[ "${1:-}" == "-s" ]]; then
 		[[ $# -ge 2 ]] || usage
-		NAME="$2"
+		SESSION_NAME="$2"
 		shift 2
 	elif [[ "${1:-}" == "-a" ]]; then
 		[[ $# -ge 2 ]] || usage
@@ -56,29 +58,29 @@ fi
 if [[ "$DEBUG" -eq 1 ]]; then
 	AGENT_CMD=(bash)
 elif [[ "$AGENT" == "codex" ]]; then
-	AGENT_CMD=(codex -a never -s danger-full-access)
-	if [[ ! -z "$NAME" ]]; then
-		AGENT_CMD+=(resume "$NAME")
+	AGENT_CMD=(codex --no-daemon -a never -s danger-full-access)
+	if [[ ! -z "$SESSION_NAME" ]]; then
+		AGENT_CMD+=(resume "$SESSION_NAME")
 	fi
 elif [[ "$AGENT" == "gemini" ]]; then
 	AGENT_CMD=(gemini -y)
-	if [[ ! -z "$NAME" ]]; then
-		AGENT_CMD+=(-r "$NAME")
+	if [[ ! -z "$SESSION_NAME" ]]; then
+		AGENT_CMD+=(-r "$SESSION_NAME")
 	fi
 elif [[ "$AGENT" == "opencode" ]]; then
 	AGENT_CMD=(opencode)
-	if [[ ! -z "$NAME" ]]; then
-		AGENT_CMD+=(-s "$NAME")
+	if [[ ! -z "$SESSION_NAME" ]]; then
+		AGENT_CMD+=(-s "$SESSION_NAME")
 	fi
 elif [[ "$AGENT" == "omp" ]]; then
 	AGENT_CMD=(omp)
-	if [[ ! -z "$NAME" ]]; then
-		AGENT_CMD+=(--resume="$NAME")
+	if [[ ! -z "$SESSION_NAME" ]]; then
+		AGENT_CMD+=(--resume="$SESSION_NAME")
 	fi
 elif [[ "$AGENT" == "claude" ]]; then
 	AGENT_CMD=(claude --dangerously-skip-permissions)
-	if [[ ! -z "$NAME" ]]; then
-		AGENT_CMD+=(--resume "$NAME")
+	if [[ ! -z "$SESSION_NAME" ]]; then
+		AGENT_CMD+=(--resume "$SESSION_NAME")
 	fi
 else
 	echo "Error: unknown agent '$AGENT' (supported: claude, codex)"
@@ -101,22 +103,23 @@ if [[ ! -L "$HOME/.claude.json" ]]; then
 fi
 
 BWRAP_ARGS=(
-	--ro-bind /usr /usr
-	--symlink usr/bin /bin
-	--symlink usr/lib /lib
-	--symlink usr/lib64 /lib64
 	--dir /tmp
 	--proc /proc
 	--dev /dev
-	--dev-bind /dev/dri /dev/dri
 	--tmpfs /run
-	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
-	--ro-bind "$HOME/Projects" "$HOME/Projects"
 	--dir "$HOME"
+	--setenv XDG_RUNTIME_DIR "/run/user/$(id -u)"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
 	--setenv GIT_SSH_COMMAND "ssh -F /dev/null"
-	--setenv RUSTC_WRAPPER ""
+	--setenv RUSTC_WRAPPER "''"
 )
+
+function maybe_dev_bind() {
+	NAME=$1
+	if [ -e "$NAME" ]; then
+		BWRAP_ARGS+=(--dev-bind "$NAME" "$NAME")
+	fi
+}
 
 function maybe_bind() {
 	NAME=$1
@@ -132,11 +135,27 @@ function maybe_ro_bind() {
 	fi
 }
 
+function symlink() {
+	NAME=$1
+	LINK=$2
+	BWRAP_ARGS+=(--symlink "$NAME" "$LINK")
+}
+
 maybe_ro_bind /boot
+maybe_ro_bind /usr
 maybe_ro_bind /etc
 maybe_ro_bind /opt
 maybe_ro_bind /sys
 maybe_ro_bind /var
+
+symlink usr/bin /bin
+symlink usr/lib /lib
+symlink usr/lib64 /lib64
+
+# the below dev mounts are for yserver testing
+maybe_dev_bind "/dev/dri"
+maybe_dev_bind "/dev/kvm"
+maybe_dev_bind "/dev/udmabuf"
 
 maybe_ro_bind "/run/systemd/resolve"
 maybe_ro_bind "$HOME/.ssh/id_ed25519.pub"
@@ -146,7 +165,6 @@ maybe_ro_bind "$HOME/.config/git/allowed_signers"
 maybe_ro_bind "$HOME/.gitconfig"
 maybe_ro_bind "$HOME/.risc0"
 
-maybe_bind "/dev/kvm"
 maybe_bind "/run/user/$(id -u)"
 maybe_bind "$HOME/.codex"
 maybe_bind "$HOME/.e16"
@@ -172,17 +190,23 @@ maybe_bind "/tmp/.ICE-unix"
 maybe_bind "/tmp/.font-unix"
 maybe_bind "/tmp/tmux-$(id -u)"
 
+# now bind all argument paths
 for p in "${PATHS[@]}"; do
 	BWRAP_ARGS+=(--bind "$p" "$p")
 done
 
 BWRAP_ARGS+=(--chdir "${PATHS[0]}")
 
+# pass through SSH agent
 if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
 	BWRAP_ARGS+=(--ro-bind "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
 	BWRAP_ARGS+=(--setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK")
 fi
 
 BWRAP_ARGS+=(--die-with-parent -- "${AGENT_CMD[@]}")
+
+if [ "$DEBUG" = "1" ]; then
+	echo "ARGS: ${BWRAP_ARGS[*]}"
+fi
 
 exec bwrap "${BWRAP_ARGS[@]}"
