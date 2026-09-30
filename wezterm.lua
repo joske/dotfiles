@@ -55,6 +55,17 @@ config.scrollback_lines = 100000
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
 
+config.window_frame = {
+    border_left_width = "0.25cell",
+    border_right_width = "0.25cell",
+    border_bottom_height = "0.25cell",
+    border_top_height = "0.25cell",
+    border_left_color = "gray",
+    border_right_color = "gray",
+    border_bottom_color = "gray",
+    border_top_color = "gray",
+}
+
 local is_wayland = os.getenv("WAYLAND_DISPLAY") ~= nil
 if is_wayland then
     config.enable_wayland = true
@@ -65,16 +76,6 @@ if is_wayland then
         config.integrated_title_button_style = "Gnome"
         config.integrated_title_buttons = { "Close", "Maximize", "Hide" }
         config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-        config.window_frame = {
-            border_left_width = "0.25cell",
-            border_right_width = "0.25cell",
-            border_bottom_height = "0.25cell",
-            border_top_height = "0.25cell",
-            border_left_color = "gray",
-            border_right_color = "gray",
-            border_bottom_color = "gray",
-            border_top_color = "gray",
-        }
     end
 end
 return config
