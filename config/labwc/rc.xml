@@ -6,7 +6,7 @@
     <raiseOnFocusDelay>500</raiseOnFocusDelay>
   </focus>
   <theme>
-    <name>Matcha-dark-azul</name>
+    <name>Taqua</name>
     <titlebar>
       <layout>close,iconify,max:</layout>
     </titlebar>
