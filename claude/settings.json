@@ -1,11 +1,27 @@
 {
-  "attribution": {
-    "sessionUrl": false
-  },
-  "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
-  },
-  "skipDangerousModePermissionPrompt": true,
-  "theme": "dark",
-  "agentPushNotifEnabled": true
+    "attribution": {
+        "sessionUrl": false
+    },
+    "model": "opus[1m]",
+    "enabledPlugins": {
+        "rust-analyzer-lsp@claude-plugins-official": true
+    },
+    "awaySummaryEnabled": false,
+    "skipDangerousModePermissionPrompt": false,
+    "theme": "dark",
+    "agentPushNotifEnabled": true,
+    "hooks": {
+        "SessionStart": [
+            {
+                "matcher": "^(startup|resume|clear|compact|fork)$",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "bash '/home/jos/.claude/hooks/herdr-agent-state.sh' session",
+                        "timeout": 10
+                    }
+                ]
+            }
+        ]
+    }
 }
