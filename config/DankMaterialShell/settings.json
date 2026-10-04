@@ -25,6 +25,9 @@
     }
   },
   "monoFontFamily": "UbuntuMono Nerd Font Mono",
+  "acLockTimeout": 300,
+  "acPostLockMonitorTimeout": 600,
+  "lockBeforeSuspend": true,
   "showDock": true,
   "dockUseOverlayLayer": true,
   "dockGroupByApp": true,
@@ -53,7 +56,6 @@
         "clipboard",
         "cpuUsage",
         "notificationButton",
-        "battery",
         "controlCenterButton",
         {
           "id": "clock",
