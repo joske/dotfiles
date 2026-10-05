@@ -3,16 +3,19 @@
 set -euo pipefail
 
 usage() {
-	echo "Usage: $0 [-d] [-s session-name] [-a agent] <path> [path...]"
+	echo "Usage: $0 [-d] [-s session-name] [-a agent] [-o arg]... <path> [path...]"
 	echo "  First path must be a directory (used as working directory)."
 	echo "  -a agent: 'claude' (default) or 'codex', 'opencode', 'omp', 'gemini'"
 	echo "  -d: run bash instead of the selected agent for debugging"
+	echo "  -o arg: extra argument appended to the agent command, may be"
+	echo "          repeated; order of -o flags is preserved"
 	exit 1
 }
 
 SESSION_NAME=""
 AGENT="claude"
 DEBUG=0
+AGENT_EXTRA=()
 
 # ARGS parsing
 while true; do
@@ -26,6 +29,10 @@ while true; do
 	elif [[ "${1:-}" == "-a" ]]; then
 		[[ $# -ge 2 ]] || usage
 		AGENT="$2"
+		shift 2
+	elif [[ "${1:-}" == "-o" ]]; then
+		[[ $# -ge 2 ]] || usage
+		AGENT_EXTRA+=("$2")
 		shift 2
 	else
 		break
@@ -87,6 +94,10 @@ else
 	exit 1
 fi
 
+AGENT_CMD+=("${AGENT_EXTRA[@]}")
+
+# --bind only supports folders, but .claude.json lives directly in $HOME, and we don't want to give rw to $HOME
+# so move it inside of ~/.claude, symlink and tell claude about this using CLAUDE_CONFIG_DIR
 if [[ ! -L "$HOME/.claude.json" ]]; then
 	if [[ -f "$HOME/.claude.json" ]]; then
 		if [[ -e "$HOME/.claude/.claude.json" ]]; then
