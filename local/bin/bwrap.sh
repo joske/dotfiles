@@ -58,7 +58,7 @@ fi
 if [[ "$DEBUG" -eq 1 ]]; then
 	AGENT_CMD=(bash)
 elif [[ "$AGENT" == "codex" ]]; then
-	AGENT_CMD=(codex --no-daemon -a never -s danger-full-access)
+	AGENT_CMD=(codex --no-daemon -a never -s danger-full-access --no-alt-screen)
 	if [[ ! -z "$SESSION_NAME" ]]; then
 		AGENT_CMD+=(resume "$SESSION_NAME")
 	fi
