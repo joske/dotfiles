@@ -10,7 +10,10 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
-config.mux_enable_ssh_agent = false
+-- not available in older (stable) wezterm versions; config_builder errors on unknown keys
+pcall(function()
+    config.mux_enable_ssh_agent = false
+end)
 
 -- config.color_scheme = "AdventureTime"
 config.keys = {
