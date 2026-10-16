@@ -1,5 +1,4 @@
 {
-  "currentThemeName": "blue",
   "cornerRadius": 12,
   "firstDayOfWeek": 1,
   "clockFormat": "24h",
@@ -25,7 +24,7 @@
     }
   },
   "monoFontFamily": "UbuntuMono Nerd Font Mono",
-  "acLockTimeout": 300,
+  "acLockTimeout": 600,
   "acPostLockMonitorTimeout": 600,
   "lockBeforeSuspend": true,
   "showDock": true,
@@ -120,7 +119,8 @@
     "hslHue": -1,
     "hslSaturation": 0,
     "hslLightness": 1,
-    "valid": true
+    "valid": true,
+    "rgba": -1
   },
   "systemMonitorCustomColor": {
     "r": 1,
@@ -133,7 +133,8 @@
     "hslHue": -1,
     "hslSaturation": 0,
     "hslLightness": 1,
-    "valid": true
+    "valid": true,
+    "rgba": -1
   },
   "builtInPluginSettings": {
     "dms_settings_search": {
@@ -141,6 +142,12 @@
     },
     "dms_clipboard_search": {
       "trigger": "cb"
+    },
+    "dms_power": {
+      "trigger": "pw"
+    },
+    "dms_qr_generator": {
+      "trigger": "qrg"
     }
   },
   "configVersion": 18
