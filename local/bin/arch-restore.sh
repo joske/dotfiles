@@ -16,7 +16,7 @@ echo "=> installing base packages"
 sudo sed -i '/^#Color/s/#Color/Color/' /etc/pacman.conf
 sudo pacman -Syu --noconfirm
 sudo pacman -S --needed --noconfirm fish fisher git base-devel ripgrep rustup lazygit tmux neovim ruby yarn npm btop \
-	ranger gdu cpio unrar zip unzip tar gzip bzip2 xz curl wget bc jq tree fzf sccache net-tools man-db less imagemagick exfat-utils \
+	ranger gdu cpio unrar zip unzip tar gzip bzip2 xz curl wget bc jq tree fzf sccache net-tools man-db less imagemagick exfatprogs \
 	lnav docker docker-compose tree-sitter-cli difftastic ntfsprogs
 
 # uncomment below if you want to install latex (it downloads 750 MB and installs 2GB)
