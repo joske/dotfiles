@@ -16,7 +16,7 @@ NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER
 
 I have the following machines:
 
-silence: i9 13900k with rx580, 64GB RAM (Arch/FreeBSD/macOS/windows)
+silence: i9 13900k with rx 6800, 64GB RAM (Arch/FreeBSD/macOS/windows)
 bee: beelink EQR6 with AMD 6900HX APU, 20 GB RAM (Arch/windows)
 fuji: fujitsu lifebook U937 with i5-7200U, 20 GB RAM (macOS/Arch)
 air: M1 MBA 16GB RAM (macOS/asahi alarm)
