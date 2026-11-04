@@ -118,7 +118,11 @@ if [ -x /usr/bin/gnome-shell ]; then
 		if [ ! -d "$HOME/.local/share/gnome-shell/extensions/$uuid" ]; then
 			info_json=$(curl -sS "https://extensions.gnome.org/extension-info/?uuid=$uuid&shell_version=$shell_version")
 
-			download_url=$(echo "=> $info_json" | jq ".download_url" --raw-output)
+			download_url=$(echo "$info_json" | jq ".download_url // empty" --raw-output)
+			if [ -z "$download_url" ]; then
+				echo "=> no download for $uuid on shell $shell_version: $info_json" >&2
+				return 0
+			fi
 
 			gnome-extensions install "https://extensions.gnome.org$download_url"
 		fi
