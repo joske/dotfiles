@@ -120,6 +120,8 @@ fi
 if [[ ! -s "$SBX/home/.ssh/known_hosts" && -f "$HOME/.ssh/known_hosts" ]]; then
 	mkdir -p "$SBX/home/.ssh"
 	chmod 700 "$SBX/home/.ssh"
+	# the old mount-point file is empty and 0444, so remove instead of overwrite
+	rm -f "$SBX/home/.ssh/known_hosts"
 	cp "$HOME/.ssh/known_hosts" "$SBX/home/.ssh/known_hosts"
 fi
 
