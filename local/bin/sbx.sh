@@ -9,9 +9,10 @@ set -euo pipefail
 
 usage() {
 	cat <<EOF
-Usage: $0 [-dN] [-p name] [-s session] [-a agent] [-o arg]... <path> [path...] [-- cmd [args...]]
+Usage: $0 [-dN] [-p name] [-s session] [-a agent] [-o arg]... [path...] [-- cmd [args...]]
        $0 -L
-  First path must be a directory (used as working directory).
+  First path must be a directory (used as working directory). Paths can be
+  left out with -p if the sandbox config sets SBX_PATHS=(...).
   -- cmd: run cmd (e.g. fish) instead of the agent
   -a agent: 'claude' (default), 'codex', 'opencode', 'omp' or 'gemini'
   -d: debug: print bwrap args and run bash
@@ -46,7 +47,16 @@ while getopts ":dNLp:s:a:o:" opt; do
 	*) usage ;;
 	esac
 done
+# getopts eats a "--" right after the options; keep it so a command without
+# paths ("sbx.sh -p foo -- fish") isn't taken for paths
+END_OF_OPTS=0
+if [[ $OPTIND -gt 1 && "${*:OPTIND-1:1}" == "--" ]]; then
+	END_OF_OPTS=1
+fi
 shift $((OPTIND - 1))
+if [[ "$END_OF_OPTS" -eq 1 ]]; then
+	set -- -- "$@"
+fi
 
 if [[ "$LIST" -eq 1 ]]; then
 	shopt -s nullglob
@@ -64,8 +74,30 @@ if [[ "$LIST" -eq 1 ]]; then
 	exit 0
 fi
 
+# resolve and check paths into PATHS; the first one must be a directory
+function resolve_paths() {
+	local arg p
+	PATHS=()
+	for arg in "$@"; do
+		p=$(realpath "$arg")
+		if [[ ! -e "$p" ]]; then
+			echo "Error: '$p' does not exist"
+			exit 1
+		fi
+		if [[ ! -r "$p" ]]; then
+			echo "Error: '$p' is not readable"
+			exit 1
+		fi
+		PATHS+=("$p")
+	done
+	if [[ ! -d "${PATHS[0]}" ]]; then
+		echo "Error: first path '${PATHS[0]}' must be a directory"
+		exit 1
+	fi
+}
+
 # paths up to "--", the rest is the command
-PATHS=()
+CLI_PATHS=()
 USER_CMD=()
 while [[ $# -gt 0 ]]; do
 	if [[ "$1" == "--" ]]; then
@@ -73,26 +105,17 @@ while [[ $# -gt 0 ]]; do
 		USER_CMD=("$@")
 		break
 	fi
-	p=$(realpath "$1")
-	if [[ ! -e "$p" ]]; then
-		echo "Error: '$p' does not exist"
-		exit 1
-	fi
-	if [[ ! -r "$p" ]]; then
-		echo "Error: '$p' is not readable"
-		exit 1
-	fi
-	PATHS+=("$p")
+	CLI_PATHS+=("$1")
 	shift
 done
 
-[[ ${#PATHS[@]} -ge 1 ]] || usage
-if [[ ! -d "${PATHS[0]}" ]]; then
-	echo "Error: first path '${PATHS[0]}' must be a directory"
-	exit 1
+PATHS=()
+if [[ ${#CLI_PATHS[@]} -gt 0 ]]; then
+	resolve_paths "${CLI_PATHS[@]}"
 fi
 
 if [[ -z "$SBX_NAME" ]]; then
+	[[ ${#PATHS[@]} -gt 0 ]] || usage
 	hash=$(printf '%s' "${PATHS[0]}" | sha256sum | cut -c1-8)
 	SBX_NAME="$(basename "${PATHS[0]}")-$hash"
 fi
@@ -102,6 +125,10 @@ if [[ "$SBX_NAME" == */* || "$SBX_NAME" == "." || "$SBX_NAME" == ".." ]]; then
 fi
 
 SBX="$SBX_ROOT/$SBX_NAME"
+if [[ ${#PATHS[@]} -eq 0 && ! -d "$SBX/home" ]]; then
+	echo "Error: sandbox '$SBX_NAME' doesn't exist; create it by passing its path(s)"
+	exit 1
+fi
 if [[ ! -d "$SBX/home" ]]; then
 	mkdir -p "$SBX/home"
 	chmod 700 "$SBX" "$SBX/home"
@@ -134,9 +161,19 @@ SBX_SSH_AGENT=0
 SBX_NET=1
 SBX_EXTRA_BINDS=()
 SBX_EXTRA_RO_BINDS=()
+SBX_PATHS=()
 if [[ -f "$SBX/config" ]]; then
 	# shellcheck source=/dev/null
 	source "$SBX/config"
+fi
+# paths: command line, else SBX_PATHS from config
+if [[ ${#PATHS[@]} -eq 0 ]]; then
+	if [[ ${#SBX_PATHS[@]} -eq 0 ]]; then
+		echo "Error: no paths given and no SBX_PATHS in $SBX/config"
+		echo "  add e.g.: SBX_PATHS=(\"\$HOME/Projects/$SBX_NAME\")"
+		exit 1
+	fi
+	resolve_paths "${SBX_PATHS[@]}"
 fi
 [[ "$NO_NET" -eq 1 ]] && SBX_NET=0
 
