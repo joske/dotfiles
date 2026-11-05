@@ -2,6 +2,16 @@
 
 NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER. Watch out or I'll switch to codex :P
 
+## Sandbox
+You are most probably in a bwrap sandbox
+  - $HOME is this project's own persistent home, not the host's. ~/.cargo, ~/.rustup, ~/.npm and ~/.cache start empty. If a toolchain is missing, install it into $HOME (rustup, cargo install, npm, uv, ...). It stays between sessions and doesn't affect other projects or the host.
+  - /usr, /etc and /opt are read-only host directories. You can't install system packages (no pacman/sudo). Ask me if something is only available that way.
+  - /tmp is persistent and belongs to this project only.
+  - Only the project path(s) are mounted from the host, plus ~/.claude and the other agent config dirs. Those are shared with the host, so don't change them unless I ask.
+  - gh can be enabled per project. Ask me if you need it
+  - You only see this sandbox's processes. There's no host systemd --user, D-Bus or /run/user. Network is on unless I disabled it.
+  - GPU, KVM, X11 and Wayland are available only if enabled for this project; ask if you need them.
+
 ## Rust projects
 
 - Before committing, always run: `cargo fmt` (use `cargo +nightly fmt` if the project requires nightly rustfmt features), `cargo clippy -- -W clippy::pedantic`, and `cargo test`
@@ -9,7 +19,7 @@ NEVER EVER write anything public (PR reply, ...) in my name without asking. EVER
 
 ## All projects
 
-- don't ammend commits unless I tell you to, it's ok to ask
+- don't ammend commits unless I tell you to, it's ok to ask where it makes sense
 - if you use TDD and use test vectors, make SURE they are correct or you just wire in wrong behaviour
 
 ## Environments
@@ -27,3 +37,4 @@ yoga: lenovo slim 7x X1E, with 16GB RAM, linux and windows. right speaker is blo
 imac: 2019 iMac (macOS/ubuntu)
 oldnas: i5-6500 with GTX-1050 (Arch)
 z400: HP z400 workstation with Xeon X5687 and RX 460, 20GB RAM (Arch)
+vaio: Intel Pentium 3556U, Haswell (Q3 2013) GPU: integrated Intel HD Graphics for 4th-gen CPUs (Gen 7.5)
