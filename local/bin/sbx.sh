@@ -15,7 +15,8 @@ Usage: $0 [-dN] [-p name] [-s session] [-a agent] [-o arg]... [path...] [-- cmd 
   directory). They can be left out with -p if the sandbox config sets
   SBX_PATHS=(...).
   -- cmd: run cmd (e.g. fish) instead of the agent
-  -a agent: 'claude' (default), 'codex', 'opencode', 'omp' or 'gemini'
+  -a agent: 'claude' (default), 'codex', 'opencode', 'omp' or 'gemini';
+            default can be set with SBX_AGENT=... in config
   -d: debug: print bwrap args and run bash
   -N: no network (--unshare-net), same as SBX_NET=0 in config
   -p name: sandbox name (default: the -s session name if no paths are given,
@@ -30,7 +31,7 @@ EOF
 
 SBX_ROOT="${SBX_ROOT:-$HOME/.sandboxes}"
 SESSION_NAME=""
-AGENT="claude"
+AGENT=""
 DEBUG=0
 AGENT_EXTRA=()
 SBX_NAME=""
@@ -163,11 +164,13 @@ fi
 # per-project config (host side only, never bound into the sandbox)
 # shellcheck disable=SC2034 # read indirectly via the OPTIN table
 SBX_X11=0 SBX_GPU=0 SBX_KVM=0 SBX_UDMABUF=0
+SBX_GH=0
 SBX_WAYLAND=0
 SBX_PIPEWIRE=0
 SBX_SSH_AGENT=0
 SBX_NET=1
 SBX_EXTRA_RO_BINDS=()
+SBX_AGENT=claude
 SBX_PATHS=()
 if [[ -f "$SBX/config" ]]; then
 	# shellcheck source=/dev/null
@@ -200,6 +203,7 @@ elif [[ ${#USER_CMD[@]} -gt 0 ]]; then
 		echo "Copied ~/.config/fish into sandbox '$SBX_NAME'"
 	fi
 else
+	AGENT="${AGENT:-$SBX_AGENT}" # -a beats SBX_AGENT from config
 	case "$AGENT" in
 	codex)
 		AGENT_CMD=(codex --no-daemon -a never -s danger-full-access --no-alt-screen)
@@ -353,6 +357,17 @@ else
 	BWRAP_ARGS+=(--unsetenv SSH_AUTH_SOCK)
 fi
 [[ "$SBX_NET" == "0" ]] && BWRAP_ARGS+=(--unshare-net)
+# host gh login: hand over the token (works with keyring storage too); exported
+# rather than --setenv so it doesn't show up in bwrap's argv
+if [[ "$SBX_GH" == "1" ]]; then
+	if gh_token=$(gh auth token 2>/dev/null) && [[ -n "$gh_token" ]]; then
+		export GH_TOKEN="$gh_token"
+	else
+		echo "Warning: SBX_GH=1 but 'gh auth token' failed on the host; gh won't be logged in" >&2
+	fi
+else
+	unset GH_TOKEN GITHUB_TOKEN # don't leak a token from the host environment
+fi
 
 for p in "${SBX_EXTRA_RO_BINDS[@]}"; do
 	BWRAP_ARGS+=(--ro-bind "$p" "$p")
