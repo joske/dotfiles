@@ -115,6 +115,13 @@ if [[ ! -d "$SBX/tmp" ]]; then
 	mkdir -p "$SBX/tmp"
 	chmod 1777 "$SBX/tmp"
 fi
+# per-sandbox rw known_hosts, seeded from the host (also fills the empty
+# mount-point file left behind by older versions that bound the host one)
+if [[ ! -s "$SBX/home/.ssh/known_hosts" && -f "$HOME/.ssh/known_hosts" ]]; then
+	mkdir -p "$SBX/home/.ssh"
+	chmod 700 "$SBX/home/.ssh"
+	cp "$HOME/.ssh/known_hosts" "$SBX/home/.ssh/known_hosts"
+fi
 
 # per-project config (host side only, never bound into the sandbox)
 # shellcheck disable=SC2034 # read indirectly via the OPTIN table
@@ -172,8 +179,9 @@ else
 	AGENT_CMD+=("${AGENT_EXTRA[@]}")
 fi
 
-# --bind only supports folders, but .claude.json lives directly in $HOME, and we don't want to give rw to $HOME
-# so move it inside of ~/.claude, symlink and tell claude about this using CLAUDE_CONFIG_DIR
+# claude rewrites ~/.claude.json via write-temp-then-rename, which fails on a
+# bind-mounted file (EBUSY), so the file itself can't be bound. Move it into
+# ~/.claude (bound as a dir), symlink it, and point CLAUDE_CONFIG_DIR there.
 if [[ ! -L "$HOME/.claude.json" ]]; then
 	if [[ -f "$HOME/.claude.json" ]]; then
 		if [[ -e "$HOME/.claude/.claude.json" ]]; then
@@ -199,14 +207,14 @@ BWRAP_ARGS=(
 	--proc /proc
 	--dev /dev
 	--tmpfs /run
-	--dir "$RUNTIME_DIR"
+	--perms 0700 --dir "$RUNTIME_DIR"
 	--unshare-pid
 	--unshare-ipc
 	--unshare-uts
 	--setenv XDG_RUNTIME_DIR "$RUNTIME_DIR"
 	--setenv CLAUDE_CONFIG_DIR "$HOME/.claude"
 	--setenv GIT_SSH_COMMAND "ssh -F /dev/null"
-	--setenv RUSTC_WRAPPER "''"
+	--unsetenv RUSTC_WRAPPER # don't inherit a host wrapper; set one in the sandbox's ~/.cargo if wanted
 	--setenv PATH "$HOME/.cargo/bin:$HOME/.local/bin:/usr/bin:/bin"
 )
 
@@ -233,7 +241,6 @@ maybe ro-bind /var
 BWRAP_ARGS+=(--symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64)
 
 maybe ro-bind "/run/systemd/resolve"
-maybe ro-bind "$HOME/.ssh/known_hosts"
 maybe ro-bind "$HOME/.config/git/allowed_signers"
 maybe ro-bind "$HOME/.risc0"
 maybe bind "$HOME/.e16"
@@ -243,7 +250,7 @@ maybe bind "$HOME/.e16"
 maybe bind "$HOME/.codex"
 maybe bind "$HOME/.gemini"
 maybe bind "$HOME/.claude"                  # also holds the ~/.claude.json symlink target
-maybe bind "$HOME/Projects/dotfiles/claude" # ~/.claude is a symlink to this
+maybe bind "$HOME/Projects/dotfiles/claude" # target of ~/.claude/{settings.json,CLAUDE.md} symlinks
 maybe bind "$HOME/.local/bin/claude"
 maybe bind "$HOME/.local/share/claude"
 maybe bind "$HOME/.local/state/claude"
