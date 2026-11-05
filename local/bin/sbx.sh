@@ -132,7 +132,9 @@ fi
 SBX="$SBX_ROOT/$SBX_NAME"
 # a dir holding just a hand-written config counts as an existing sandbox
 if [[ ${#PATHS[@]} -eq 0 && ! -d "$SBX" ]]; then
-	echo "Error: sandbox '$SBX_NAME' doesn't exist; create it by passing its path(s)"
+	echo "Error: sandbox '$SBX_NAME' doesn't exist; create it with either:"
+	echo "  $(basename "$0") -p $SBX_NAME <path>..."
+	echo "  mkdir $SBX and put SBX_PATHS=(<path>...) in $SBX/config"
 	exit 1
 fi
 if [[ ! -d "$SBX/home" ]]; then
