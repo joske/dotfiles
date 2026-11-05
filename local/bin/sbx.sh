@@ -11,13 +11,15 @@ usage() {
 	cat <<EOF
 Usage: $0 [-dN] [-p name] [-s session] [-a agent] [-o arg]... [path...] [-- cmd [args...]]
        $0 -L
-  First path must be a directory (used as working directory). Paths can be
-  left out with -p if the sandbox config sets SBX_PATHS=(...).
+  Paths are bound rw; the first must be a directory (used as working
+  directory). They can be left out with -p if the sandbox config sets
+  SBX_PATHS=(...).
   -- cmd: run cmd (e.g. fish) instead of the agent
   -a agent: 'claude' (default), 'codex', 'opencode', 'omp' or 'gemini'
   -d: debug: print bwrap args and run bash
   -N: no network (--unshare-net), same as SBX_NET=0 in config
-  -p name: sandbox name (default: <basename>-<sha256(realpath)[:8]> of first path)
+  -p name: sandbox name (default: the -s session name if no paths are given,
+           else <basename>-<sha256(realpath)[:8]> of first path)
   -L: list existing sandboxes and exit
   -s session: resume this agent session
   -o arg: extra argument appended to the agent command, may be repeated
@@ -114,6 +116,9 @@ if [[ ${#CLI_PATHS[@]} -gt 0 ]]; then
 	resolve_paths "${CLI_PATHS[@]}"
 fi
 
+if [[ -z "$SBX_NAME" && ${#PATHS[@]} -eq 0 && -n "$SESSION_NAME" ]]; then
+	SBX_NAME="$SESSION_NAME" # "sbx.sh -s foo" = sandbox foo, resume session foo
+fi
 if [[ -z "$SBX_NAME" ]]; then
 	[[ ${#PATHS[@]} -gt 0 ]] || usage
 	hash=$(printf '%s' "${PATHS[0]}" | sha256sum | cut -c1-8)
@@ -125,7 +130,8 @@ if [[ "$SBX_NAME" == */* || "$SBX_NAME" == "." || "$SBX_NAME" == ".." ]]; then
 fi
 
 SBX="$SBX_ROOT/$SBX_NAME"
-if [[ ${#PATHS[@]} -eq 0 && ! -d "$SBX/home" ]]; then
+# a dir holding just a hand-written config counts as an existing sandbox
+if [[ ${#PATHS[@]} -eq 0 && ! -d "$SBX" ]]; then
 	echo "Error: sandbox '$SBX_NAME' doesn't exist; create it by passing its path(s)"
 	exit 1
 fi
@@ -159,14 +165,17 @@ SBX_WAYLAND=0
 SBX_PIPEWIRE=0
 SBX_SSH_AGENT=0
 SBX_NET=1
-SBX_EXTRA_BINDS=()
 SBX_EXTRA_RO_BINDS=()
 SBX_PATHS=()
 if [[ -f "$SBX/config" ]]; then
 	# shellcheck source=/dev/null
 	source "$SBX/config"
 fi
-# paths: command line, else SBX_PATHS from config
+if [[ -n "${SBX_EXTRA_BINDS+x}" ]]; then
+	echo "Error: SBX_EXTRA_BINDS was merged into SBX_PATHS; move its entries there in $SBX/config"
+	exit 1
+fi
+# paths (all bound rw, first is the working dir): command line, else SBX_PATHS from config
 if [[ ${#PATHS[@]} -eq 0 ]]; then
 	if [[ ${#SBX_PATHS[@]} -eq 0 ]]; then
 		echo "Error: no paths given and no SBX_PATHS in $SBX/config"
@@ -343,9 +352,6 @@ else
 fi
 [[ "$SBX_NET" == "0" ]] && BWRAP_ARGS+=(--unshare-net)
 
-for p in "${SBX_EXTRA_BINDS[@]}"; do
-	BWRAP_ARGS+=(--bind "$p" "$p")
-done
 for p in "${SBX_EXTRA_RO_BINDS[@]}"; do
 	BWRAP_ARGS+=(--ro-bind "$p" "$p")
 done
