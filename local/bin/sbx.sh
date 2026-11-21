@@ -305,11 +305,13 @@ maybe bind "$HOME/.codex"
 maybe bind "$HOME/.gemini"
 maybe bind "$HOME/.claude"                  # also holds the ~/.claude.json symlink target
 maybe bind "$HOME/Projects/dotfiles/claude" # target of ~/.claude/{settings.json,CLAUDE.md} symlinks
+maybe bind "$HOME/Projects/dotfiles/config/herdr/"
 maybe bind "$HOME/.local/bin/claude"
 maybe bind "$HOME/.local/share/claude"
 maybe bind "$HOME/.local/state/claude"
 maybe bind "$HOME/.omp"
 maybe bind "$HOME/.config/omp"
+maybe bind "$HOME/.config/herdr"
 maybe bind "$HOME/.config/opencode"
 maybe bind "$HOME/.local/share/opencode"
 maybe bind "$HOME/.local/state/opencode"
