@@ -58,11 +58,21 @@ if [ ! -d "$HOME/Projects/dotfiles" ]; then
 fi
 rcup -f -x excl -d "$HOME/Projects/dotfiles"
 
+# wezterm-git
+if [ ! -d "$HOME/Projects/myPKGBUILDs/" ]; then
+	pushd "$HOME/Projects/" || true
+	git clone https://github.com/joske/myPKGBUILDs
+	pushd myPKGBUILDs
+	makepkg -siA --noconfirm
+	popd || true
+	popd || true
+fi
+
 # GUI apps
 echo "=> installing GUI apps"
 if has_gui; then
-	sudo pacman -S --needed --noconfirm firefox wezterm wl-clipboard xclip xsel seahorse ghex gimp transmission-gtk cups hplip foomatic-db-ppds
-	yay -S --needed --noconfirm mergers ttf-ubuntu-mono-nerd bitwarden shortwave hplip-plugin
+	sudo pacman -S --needed --noconfirm firefox wl-clipboard xclip xsel seahorse ghex gimp transmission-gtk cups hplip foomatic-db-ppds
+	yay -S --needed --noconfirm mergers ttf-ubuntu-mono-nerd ttf-jetbrains-mono-nerd bitwarden shortwave hplip-plugin
 
 	# x86_64 only packages
 	if [ "$(uname -m)" = "x86_64" ]; then
@@ -93,7 +103,10 @@ if [ -x /usr/bin/gsettings ] && [ -f "$HOME/Pictures/catbackground.jpg" ]; then
 fi
 if [ -x /usr/bin/gnome-shell ]; then
 	echo "=> configuring GNOME"
-	sudo pacman -S --needed --noconfirm extension-manager dconf-editor
+
+	# extra GNOME packages
+	sudo pacman -S --needed --noconfirm extension-manager dconf-editor gnome-tweaks snapshot
+
 	dconf write /org/gnome/desktop/interface/accent-color "'blue'"
 	dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
 	dconf write /org/gnome/desktop/interface/enable-hot-corners false
